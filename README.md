@@ -35,7 +35,7 @@ To install through composer, simply run the following command:
 
 #### Add Service Provider
 
-Next add the following service provider in `config/app.php`.
+Add the following service provider in `config/app.php`.
 
 ```php
 'providers' => [
@@ -43,7 +43,7 @@ Next add the following service provider in `config/app.php`.
 ],
 ```
 
-Next, add the following aliases to `aliases` array in the same file.
+Add the following aliases to `aliases` array in the same file.
 
 ```php
 'aliases' => [
@@ -51,24 +51,10 @@ Next, add the following aliases to `aliases` array in the same file.
 ],
 ```
 
-Next publish the package's configuration file by running :
+Publish the package's configuration file by running :
 
 ```
 php artisan vendor:publish --provider="Rad\Modules\ServiceProvider"
-```
-
-#### Autoloading
-
-By default controllers, entities or repositories are not loaded automatically. You can autoload your modules using `psr-4`. For example :
-
-```json
-{
-  "autoload": {
-    "psr-4": {
-      "App\\": "app/"
-    }
-  }
-}
 ```
 
 <a name="configuration"></a>
@@ -90,6 +76,12 @@ By default controllers, entities or repositories are not loaded automatically. Y
 - `enabled` - If `true`, the scanned modules (all modules) will cached automatically. By default the value is `false`
 - `key` - The name of cache.
 - `lifetime` - Lifetime of cache.
+
+## Setting up modules folders for first use
+
+```
+php artisan module:setup
+```
 
 <a name="creating-a-module"></a>
 ## Creating A Module

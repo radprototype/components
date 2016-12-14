@@ -24,6 +24,7 @@ class Runner implements RunableInterface
         $this->module = $module;
     }
 
+
     /**
      * Run the given command.
      *

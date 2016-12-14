@@ -40,10 +40,10 @@ class ModelCommand extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('model', InputArgument::REQUIRED, 'The name of model will be created.'),
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['model', InputArgument::REQUIRED, 'The name of model will be created.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
@@ -53,9 +53,9 @@ class ModelCommand extends Command
      */
     protected function getOptions()
     {
-        return array(
-            array('fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null),
-        );
+        return [
+            ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
+        ];
     }
 
     /**
@@ -66,14 +66,14 @@ class ModelCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/model.stub', [
-            'NAME'              => $this->getModelName(),
-            'FILLABLE'          => $this->getFillable(),
-            'NAMESPACE'         => $this->getClassNamespace($module),
-            'CLASS'             => $this->getClass(),
-            'LOWER_NAME'        => $module->getLowerName(),
-            'MODULE'            => $this->getModuleName(),
-            'STUDLY_NAME'       => $module->getStudlyName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
+            'NAME'             => $this->getModelName(),
+            'FILLABLE'         => $this->getFillable(),
+            'NAMESPACE'        => $this->getClassNamespace($module),
+            'CLASS'            => $this->getClass(),
+            'LOWER_NAME'       => $module->getLowerName(),
+            'MODULE'           => $this->getModuleName(),
+            'STUDLY_NAME'      => $module->getStudlyName(),
+            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
         ]))->render();
     }
 

@@ -43,8 +43,8 @@ class UpdateCommand extends ModuleCommand
      */
     protected function getArguments()
     {
-        return array(
-            array('module', InputArgument::OPTIONAL, 'The name of module will be updated.'),
-        );
+        return [
+            ['module', InputArgument::OPTIONAL, 'The name of module will be updated.'],
+        ];
     }
 }

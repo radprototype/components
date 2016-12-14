@@ -89,8 +89,8 @@ class SeedCommand extends ModuleCommand
     public function moduleSeed(Module $module)
     {
         $seeders = [];
-        $name = $module->getName();
-        $config = $module->get('seed');
+        $name    = $module->getName();
+        $config  = $module->get('seed');
         if (is_array($config) && array_key_exists('seeds', $config)) {
             foreach ((array)$config['seeds'] as $class) {
                 if (@class_exists($class)) {
@@ -157,9 +157,9 @@ class SeedCommand extends ModuleCommand
      */
     protected function getArguments()
     {
-        return array(
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
@@ -169,9 +169,9 @@ class SeedCommand extends ModuleCommand
      */
     protected function getOptions()
     {
-        return array(
-            array('database', null, InputOption::VALUE_OPTIONAL, 'The database connection to seed.'),
-            array('force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'),
-        );
+        return [
+            ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to seed.'],
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'],
+        ];
     }
 }

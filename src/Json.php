@@ -35,7 +35,7 @@ class Json
      */
     public function __construct($path, Filesystem $filesystem = null)
     {
-        $this->path = (string) $path;
+        $this->path       = (string)$path;
         $this->filesystem = $filesystem ?: new Filesystem();
         $this->attributes = Collection::make($this->getAttributes());
     }
@@ -83,7 +83,7 @@ class Json
      */
     public function setPath($path)
     {
-        $this->path = (string) $path;
+        $this->path = (string)$path;
 
         return $this;
     }
@@ -193,7 +193,7 @@ class Json
     /**
      * Get the specified attribute from json file.
      *
-     * @param $key
+     * @param      $key
      * @param null $default
      *
      * @return mixed

@@ -49,8 +49,8 @@ class GenerateMailCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/mail.stub', [
-            'NAMESPACE'         => $this->getClassNamespace($module),
-            'CLASS'             => $this->getClass(),
+            'NAMESPACE' => $this->getClassNamespace($module),
+            'CLASS'     => $this->getClass(),
         ]))->render();
     }
 

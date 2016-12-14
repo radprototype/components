@@ -35,7 +35,7 @@ class Migrator
      */
     public function __construct(Module $module)
     {
-        $this->module = $module;
+        $this->module  = $module;
         $this->laravel = $module->getLaravel();
     }
 
@@ -79,6 +79,7 @@ class Migrator
      * Get migration files.
      *
      * @param boolean $reverse
+     *
      * @return array
      */
     public function getMigrations($reverse = false)
@@ -89,7 +90,7 @@ class Migrator
         // extension and take the basename of the file which is all we need when
         // finding the migrations that haven't been run against the databases.
         if ($files === false) {
-            return array();
+            return [];
         }
 
         $files = array_map(function ($file) {
@@ -204,7 +205,7 @@ class Migrator
     /**
      * Require in all the migration files in a given path.
      *
-     * @param array  $files
+     * @param array $files
      */
     public function requireFiles(array $files)
     {
@@ -247,7 +248,7 @@ class Migrator
     {
         return $this->table()->insert([
             'migration' => $migration,
-            'batch' => $this->getNextBatchNumber(),
+            'batch'     => $this->getNextBatchNumber(),
         ]);
     }
 
@@ -265,6 +266,7 @@ class Migrator
      * Get the last migration batch number.
      *
      * @param array $migrations
+     *
      * @return int
      */
     public function getLastBatchNumber($migrations)
@@ -290,7 +292,7 @@ class Migrator
         $result = $query->orderBy('migration', 'desc')->get();
 
         return collect($result)->map(function ($item) {
-            return (array) $item;
+            return (array)$item;
         })->pluck('migration');
     }
 

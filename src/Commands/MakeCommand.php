@@ -51,16 +51,16 @@ class MakeCommand extends ModuleCommand
      */
     protected function getArguments()
     {
-        return array(
-            array('name', InputArgument::IS_ARRAY, 'The names of modules will be created.'),
-        );
+        return [
+            ['name', InputArgument::IS_ARRAY, 'The names of modules will be created.'],
+        ];
     }
 
     protected function getOptions()
     {
         return [
-            array('plain', 'p', InputOption::VALUE_NONE, 'Generate a plain module (without some resources).'),
-            array('force', null, InputOption::VALUE_NONE, 'Force the operation to run when module already exist.'),
+            ['plain', 'p', InputOption::VALUE_NONE, 'Generate a plain module (without some resources).'],
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when module already exist.'],
         ];
     }
 }

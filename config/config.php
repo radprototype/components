@@ -23,25 +23,25 @@ return [
     */
 
     'stubs' => [
-        'enabled' => false,
-        'path' => base_path(__DIR__ . '/../src/Commands/stubs'),
-        'files' => [
-            'start' => 'start.php',
-            'routes' => 'Http/routes.php',
-            'json' => 'module.json',
-            'views/index' => 'Resources/views/index.blade.php',
-            'views/master' => 'Resources/views/layouts/master.blade.php',
+        'enabled'      => false,
+        'path'         => base_path(__DIR__ . '/../src/Commands/stubs'),
+        'files'        => [
+            'start'           => 'start.php',
+            'routes'          => 'Http/routes.php',
+            'json'            => 'module.json',
+            'views/index'     => 'Resources/views/index.blade.php',
+            'views/master'    => 'Resources/views/layouts/master.blade.php',
             'scaffold/config' => 'Config/config.php',
-            'composer' => 'composer.json'
+            'composer'        => 'composer.json'
         ],
         'replacements' => [
-            'start' => ['LOWER_NAME'],
-            'routes' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
-            'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
-            'views/index' => ['LOWER_NAME'],
-            'views/master' => ['STUDLY_NAME'],
+            'start'           => ['LOWER_NAME'],
+            'routes'          => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
+            'json'            => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
+            'views/index'     => ['LOWER_NAME'],
+            'views/master'    => ['STUDLY_NAME'],
             'scaffold/config' => ['STUDLY_NAME'],
-            'composer' => [
+            'composer'        => [
                 'LOWER_NAME',
                 'STUDLY_NAME',
                 'VENDOR',
@@ -105,24 +105,24 @@ return [
         */
 
         'generator' => [
-            'assets' => 'Resources/assets',
-            'config' => 'Config',
-            'command' => 'Console',
-            'event' => 'Events',
-            'listener' => 'Events/Handlers',
-            'migration' => 'Database/Migrations',
-            'model' => 'Models',
-            'repository' => 'Repositories',
-            'seed' => 'Database/Seeds',
-            'controller' => 'Http/Controllers',
-            'middleware' => 'Http/Middleware',
-            'request' => 'Http/Requests',
-            'provider' => 'Providers',
-            'lang' => 'Resources/lang',
-            'views' => 'Resources/views',
-            'test' => 'Tests',
-            'jobs' => 'Jobs',
-            'emails' => 'Emails',
+            'assets'        => 'Resources/assets',
+            'config'        => 'Config',
+            'command'       => 'Console',
+            'event'         => 'Events',
+            'listener'      => 'Events/Handlers',
+            'migration'     => 'Database/Migrations',
+            'model'         => 'Models',
+            'repository'    => 'Repositories',
+            'seed'          => 'Database/Seeds',
+            'controller'    => 'Http/Controllers',
+            'middleware'    => 'Http/Middleware',
+            'request'       => 'Http/Requests',
+            'provider'      => 'Providers',
+            'lang'          => 'Resources/lang',
+            'views'         => 'Resources/views',
+            'test'          => 'Tests',
+            'jobs'          => 'Jobs',
+            'emails'        => 'Emails',
             'notifications' => 'Notifications'
         ]
     ],
@@ -138,7 +138,7 @@ return [
 
     'scan' => [
         'enabled' => false,
-        'paths' => [
+        'paths'   => [
             base_path('vendor/*/*')
         ]
     ],
@@ -154,7 +154,7 @@ return [
     'composer' => [
         'vendor' => 'rad-modules',
         'author' => [
-            'name' => 'anonymoussc',
+            'name'  => 'anonymoussc',
             'email' => '50c5ac69@opayq.com'
         ]
     ],
@@ -166,9 +166,9 @@ return [
     | Here is the config for setting up caching feature.
     |
     */
-    'cache' => [
-        'enabled' => false,
-        'key' => 'rad-modules',
+    'cache'    => [
+        'enabled'  => false,
+        'key'      => 'rad-modules',
         'lifetime' => 60
     ],
     /*

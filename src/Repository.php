@@ -46,7 +46,7 @@ class Repository implements RepositoryInterface, Countable
      */
     public function __construct(Application $app, $path = null)
     {
-        $this->app = $app;
+        $this->app  = $app;
         $this->path = $path;
     }
 
@@ -306,7 +306,9 @@ class Repository implements RepositoryInterface, Countable
 
     /**
      * Find a specific module.
+     *
      * @param $name
+     *
      * @return mixed|void
      */
     public function find($name)
@@ -322,7 +324,9 @@ class Repository implements RepositoryInterface, Countable
 
     /**
      * Alternative for "find" method.
+     *
      * @param $name
+     *
      * @return mixed|void
      */
     public function get($name)
@@ -391,9 +395,10 @@ class Repository implements RepositoryInterface, Countable
     /**
      * Get a specific config data from a configuration file.
      *
-     * @param $key
+     * @param      $key
      *
      * @param null $default
+     *
      * @return mixed
      */
     public function config($key, $default = null)

@@ -39,10 +39,10 @@ class GenerateMiddlewareCommand extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('name', InputArgument::REQUIRED, 'The name of the command.'),
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the command.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
@@ -53,13 +53,13 @@ class GenerateMiddlewareCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/middleware.stub', [
-            'NAMESPACE'         => $this->getClassNamespace($module),
-            'CLASS'             => $this->getClass(),
-            'LOWER_NAME'        => $module->getLowerName(),
-            'MODULE'            => $this->getModuleName(),
-            'NAME'              => $this->getFileName(),
-            'STUDLY_NAME'       => $this->getFileName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
+            'NAMESPACE'        => $this->getClassNamespace($module),
+            'CLASS'            => $this->getClass(),
+            'LOWER_NAME'       => $module->getLowerName(),
+            'MODULE'           => $this->getModuleName(),
+            'NAME'             => $this->getFileName(),
+            'STUDLY_NAME'      => $this->getFileName(),
+            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
         ]))->render();
     }
 

@@ -42,6 +42,7 @@ class PublishConfigurationCommand extends ModuleCommand
 
     /**
      * @param string $module
+     *
      * @return string
      */
     private function getServiceProviderForModule($module)
@@ -58,8 +59,8 @@ class PublishConfigurationCommand extends ModuleCommand
     {
         $this->call('vendor:publish', [
             '--provider' => $this->getServiceProviderForModule($module),
-            '--force' => $this->option('force'),
-            '--tag' => ['config'],
+            '--force'    => $this->option('force'),
+            '--tag'      => ['config'],
         ]);
     }
 

@@ -57,15 +57,15 @@ class GenerateEventCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/event.stub', [
-            'NAMESPACE' => $this->getClassNamespace($module) . "\\" . config('modules.paths.generator.event'),
-            "CLASS" => $this->getClass(),
+            'NAMESPACE'      => $this->getClassNamespace($module) . "\\" . config('modules.paths.generator.event'),
+            "CLASS"          => $this->getClass(),
             'DUMMYNAMESPACE' => $this->laravel->getNamespace() . 'Events',
         ]))->render();
     }
 
     public function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path       = $this->laravel['modules']->getModulePath($this->getModuleName());
         $seederPath = $this->laravel['modules']->config('paths.generator.event');
 
         return $path . $seederPath . '/' . $this->getFileName() . '.php';

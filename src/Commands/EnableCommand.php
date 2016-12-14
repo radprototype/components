@@ -46,8 +46,8 @@ class EnableCommand extends ModuleCommand
      */
     protected function getArguments()
     {
-        return array(
-            array('module', InputArgument::REQUIRED, 'Module name.'),
-        );
+        return [
+            ['module', InputArgument::REQUIRED, 'Module name.'],
+        ];
     }
 }

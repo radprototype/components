@@ -13,6 +13,7 @@ class SeedPublisher extends AssetPublisher
 
     /**
      * MigrationPublisher constructor.
+     *
      * @param Seeder $seeder
      */
     public function __construct(Seeder $seeder)

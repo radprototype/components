@@ -11,10 +11,11 @@ class SchemaParser implements Arrayable
      *
      * @var array
      */
-    protected $customAttributes = [
-        'remember_token' => 'rememberToken()',
-        'soft_delete' => 'softDeletes()',
-    ];
+    protected $customAttributes
+        = [
+            'remember_token' => 'rememberToken()',
+            'soft_delete'    => 'softDeletes()',
+        ];
 
     /**
      * The migration schema.
@@ -28,9 +29,7 @@ class SchemaParser implements Arrayable
      *
      * @var array
      */
-    protected $relationshipKeys = [
-        'belongsTo',
-    ];
+    protected $relationshipKeys = ['belongsTo'];
 
     /**
      * Create new instance.
@@ -266,6 +265,6 @@ class SchemaParser implements Arrayable
      */
     public function getCustomAttribute($column)
     {
-        return (array) $this->customAttributes[$column];
+        return (array)$this->customAttributes[$column];
     }
 }

@@ -63,10 +63,10 @@ class MigrateCommand extends ModuleCommand
     {
         $path = str_replace(base_path(), '', (new Migrator($module))->getPath());
         $this->call('migrate', [
-            '--path' => $path,
+            '--path'     => $path,
             '--database' => $this->option('database'),
-            '--pretend' => $this->option('pretend'),
-            '--force' => $this->option('force'),
+            '--pretend'  => $this->option('pretend'),
+            '--force'    => $this->option('force'),
         ]);
 
         if ($this->option('seed')) {
@@ -81,9 +81,9 @@ class MigrateCommand extends ModuleCommand
      */
     protected function getArguments()
     {
-        return array(
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
@@ -93,12 +93,12 @@ class MigrateCommand extends ModuleCommand
      */
     protected function getOptions()
     {
-        return array(
-            array('direction', 'd', InputOption::VALUE_OPTIONAL, 'The direction of ordering.', 'asc'),
-            array('database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.'),
-            array('pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'),
-            array('force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'),
-            array('seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run.'),
-        );
+        return [
+            ['direction', 'd', InputOption::VALUE_OPTIONAL, 'The direction of ordering.', 'asc'],
+            ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.'],
+            ['pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'],
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'],
+            ['seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run.'],
+        ];
     }
 }

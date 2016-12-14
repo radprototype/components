@@ -35,10 +35,10 @@ class MigrationCommand extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('name', InputArgument::REQUIRED, 'The migration name will be created.'),
-            array('module', InputArgument::OPTIONAL, 'The name of module will be created.'),
-        );
+        return [
+            ['name', InputArgument::REQUIRED, 'The migration name will be created.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be created.'],
+        ];
     }
 
     /**
@@ -48,10 +48,10 @@ class MigrationCommand extends Command
      */
     protected function getOptions()
     {
-        return array(
-            array('fields', null, InputOption::VALUE_OPTIONAL, 'The specified fields table.', null),
-            array('plain', null, InputOption::VALUE_NONE, 'Create plain migration.'),
-        );
+        return [
+            ['fields', null, InputOption::VALUE_OPTIONAL, 'The specified fields table.', null],
+            ['plain', null, InputOption::VALUE_NONE, 'Create plain migration.'],
+        ];
     }
 
     /**
@@ -75,28 +75,28 @@ class MigrationCommand extends Command
 
         if ($parser->isCreate()) {
             return Stub::create('/migration/create.stub', [
-                'class' => $this->getClass(),
-                'table' => $parser->getTableName(),
+                'class'  => $this->getClass(),
+                'table'  => $parser->getTableName(),
                 'fields' => $this->getSchemaParser()->render(),
             ]);
         } elseif ($parser->isAdd()) {
             return Stub::create('/migration/add.stub', [
-                'class' => $this->getClass(),
-                'table' => $parser->getTableName(),
-                'fields_up' => $this->getSchemaParser()->up(),
+                'class'       => $this->getClass(),
+                'table'       => $parser->getTableName(),
+                'fields_up'   => $this->getSchemaParser()->up(),
                 'fields_down' => $this->getSchemaParser()->down(),
             ]);
         } elseif ($parser->isDelete()) {
             return Stub::create('/migration/delete.stub', [
-                'class' => $this->getClass(),
-                'table' => $parser->getTableName(),
+                'class'       => $this->getClass(),
+                'table'       => $parser->getTableName(),
                 'fields_down' => $this->getSchemaParser()->up(),
-                'fields_up' => $this->getSchemaParser()->down(),
+                'fields_up'   => $this->getSchemaParser()->down(),
             ]);
         } elseif ($parser->isDrop()) {
             return Stub::create('/migration/drop.stub', [
-                'class' => $this->getClass(),
-                'table' => $parser->getTableName(),
+                'class'  => $this->getClass(),
+                'table'  => $parser->getTableName(),
                 'fields' => $this->getSchemaParser()->render(),
             ]);
         }

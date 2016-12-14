@@ -35,7 +35,7 @@ class Seeder
      */
     public function __construct(Module $module)
     {
-        $this->module = $module;
+        $this->module  = $module;
         $this->laravel = $module->getLaravel();
     }
 
@@ -79,6 +79,7 @@ class Seeder
      * Get seed files.
      *
      * @param boolean $reverse
+     *
      * @return array
      */
     public function getSeeds($reverse = false)
@@ -89,7 +90,7 @@ class Seeder
         // extension and take the basename of the file which is all we need when
         // finding the seeds that haven't been run against the databases.
         if ($files === false) {
-            return array();
+            return [];
         }
 
         $files = array_map(function ($file) {

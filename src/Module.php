@@ -34,12 +34,12 @@ class Module extends ServiceProvider
      * The constructor.
      *
      * @param Application $app
-     * @param $name
-     * @param $path
+     * @param             $name
+     * @param             $path
      */
     public function __construct(Application $app, $name, $path)
     {
-        $this->app = $app;
+        $this->app  = $app;
         $this->name = $name;
         $this->path = realpath($path);
     }
@@ -183,7 +183,7 @@ class Module extends ServiceProvider
     /**
      * Get a specific data from json file by given the key.
      *
-     * @param $key
+     * @param      $key
      * @param null $default
      *
      * @return mixed
@@ -196,7 +196,7 @@ class Module extends ServiceProvider
     /**
      * Get a specific data from composer.json file by given the key.
      *
-     * @param $key
+     * @param      $key
      * @param null $default
      *
      * @return mixed

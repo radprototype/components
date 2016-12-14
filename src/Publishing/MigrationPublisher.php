@@ -13,6 +13,7 @@ class MigrationPublisher extends AssetPublisher
 
     /**
      * MigrationPublisher constructor.
+     *
      * @param Migrator $migrator
      */
     public function __construct(Migrator $migrator)

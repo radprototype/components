@@ -23,26 +23,27 @@ class NameParser
      *
      * @var array
      */
-    protected $actions = [
-        'create' => [
-            'create',
-            'make',
-        ],
-        'delete' => [
-            'delete',
-            'remove',
-        ],
-        'add' => [
-            'add',
-            'update',
-            'append',
-            'insert',
-        ],
-        'drop' => [
-            'destroy',
-            'drop',
-        ],
-    ];
+    protected $actions
+        = [
+            'create' => [
+                'create',
+                'make',
+            ],
+            'delete' => [
+                'delete',
+                'remove',
+            ],
+            'add'    => [
+                'add',
+                'update',
+                'append',
+                'insert',
+            ],
+            'drop'   => [
+                'destroy',
+                'drop',
+            ],
+        ];
 
     /**
      * The constructor.

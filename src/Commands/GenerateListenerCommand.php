@@ -58,11 +58,11 @@ class GenerateListenerCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/listener.stub', [
-            'NAMESPACE' => $this->getNamespace($module),
-            "EVENTNAME" => $this->getEventName($module),
+            'NAMESPACE'          => $this->getNamespace($module),
+            "EVENTNAME"          => $this->getEventName($module),
             "EVENTSHORTENEDNAME" => $this->option('event'),
-            "CLASS" => $this->getClass(),
-            'DUMMYNAMESPACE' => $this->laravel->getNamespace() . "Events",
+            "CLASS"              => $this->getClass(),
+            'DUMMYNAMESPACE'     => $this->laravel->getNamespace() . "Events",
         ]))->render();
     }
 

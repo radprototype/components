@@ -40,10 +40,10 @@ class MakeCommandCommand extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('name', InputArgument::REQUIRED, 'The name of the command.'),
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the command.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
@@ -53,9 +53,9 @@ class MakeCommandCommand extends Command
      */
     protected function getOptions()
     {
-        return array(
-            array('command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned.', null),
-        );
+        return [
+            ['command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned.', null],
+        ];
     }
 
     /**
@@ -67,8 +67,8 @@ class MakeCommandCommand extends Command
 
         return (new Stub('/command.stub', [
             'COMMAND_NAME' => $this->getCommandName(),
-            'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS' => $this->getClass(),
+            'NAMESPACE'    => $this->getClassNamespace($module),
+            'CLASS'        => $this->getClass(),
         ]))->render();
     }
 

@@ -32,9 +32,9 @@ class GenerateRouteProviderCommand extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
@@ -47,13 +47,13 @@ class GenerateRouteProviderCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/route-provider.stub', [
-            'NAMESPACE'         => $this->getClassNamespace($module),
-            'CLASS'             => $this->getClass(),
-            'LOWER_NAME'        => $module->getLowerName(),
-            'MODULE'            => $this->getModuleName(),
-            'NAME'              => $this->getFileName(),
-            'STUDLY_NAME'       => $module->getStudlyName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
+            'NAMESPACE'        => $this->getClassNamespace($module),
+            'CLASS'            => $this->getClass(),
+            'LOWER_NAME'       => $module->getLowerName(),
+            'MODULE'           => $this->getModuleName(),
+            'NAME'             => $this->getFileName(),
+            'STUDLY_NAME'      => $module->getStudlyName(),
+            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
         ]))->render();
     }
 

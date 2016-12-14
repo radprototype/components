@@ -63,7 +63,7 @@ class ModuleGenerator extends Generator
     /**
      * The constructor.
      *
-     * @param $name
+     * @param            $name
      * @param Repository $module
      * @param Config     $config
      * @param Filesystem $filesystem
@@ -76,11 +76,11 @@ class ModuleGenerator extends Generator
         Filesystem $filesystem = null,
         Console $console = null
     ) {
-        $this->name = $name;
-        $this->config = $config;
+        $this->name       = $name;
+        $this->config     = $config;
         $this->filesystem = $filesystem;
-        $this->console = $console;
-        $this->module = $module;
+        $this->console    = $console;
+        $this->module     = $module;
     }
 
     /**
@@ -313,20 +313,20 @@ class ModuleGenerator extends Generator
     public function generateResources()
     {
         $this->console->call('module:make-seed', [
-            'name' => $this->getName(),
-            'module' => $this->getName(),
+            'name'     => $this->getName(),
+            'module'   => $this->getName(),
             '--master' => true,
         ]);
 
         $this->console->call('module:make-provider', [
-            'name' => $this->getName() . 'ServiceProvider',
-            'module' => $this->getName(),
+            'name'     => $this->getName() . 'ServiceProvider',
+            'module'   => $this->getName(),
             '--master' => true,
         ]);
 
         $this->console->call('module:make-controller', [
             'controller' => $this->getName() . 'Controller',
-            'module' => $this->getName(),
+            'module'     => $this->getName(),
         ]);
     }
 

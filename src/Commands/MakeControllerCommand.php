@@ -54,16 +54,16 @@ class MakeControllerCommand extends Command
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub($this->getStubName(), [
-            'MODULENAME'        => $module->getStudlyName(),
-            'CONTROLLERNAME'    => $this->getControllerName(),
-            'NAMESPACE'         => $module->getStudlyName(),
-            'CLASS_NAMESPACE'   => $this->getClassNamespace($module),
-            'CLASS'             => $this->getControllerName(),
-            'LOWER_NAME'        => $module->getLowerName(),
-            'MODULE'            => $this->getModuleName(),
-            'NAME'              => $this->getModuleName(),
-            'STUDLY_NAME'       => $module->getStudlyName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
+            'MODULENAME'       => $module->getStudlyName(),
+            'CONTROLLERNAME'   => $this->getControllerName(),
+            'NAMESPACE'        => $module->getStudlyName(),
+            'CLASS_NAMESPACE'  => $this->getClassNamespace($module),
+            'CLASS'            => $this->getControllerName(),
+            'LOWER_NAME'       => $module->getLowerName(),
+            'MODULE'           => $this->getModuleName(),
+            'NAME'             => $this->getModuleName(),
+            'STUDLY_NAME'      => $module->getStudlyName(),
+            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
         ]))->render();
     }
 
@@ -74,10 +74,10 @@ class MakeControllerCommand extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('controller', InputArgument::REQUIRED, 'The name of the controller class.'),
-            array('module', InputArgument::OPTIONAL, 'The name of module will be used.'),
-        );
+        return [
+            ['controller', InputArgument::REQUIRED, 'The name of the controller class.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
     /**
