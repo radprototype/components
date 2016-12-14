@@ -4,10 +4,10 @@ namespace Rad\Modules;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as ModuleServiceProvider;
 use Illuminate\Support\Str;
 
-class Module extends ServiceProvider
+class Module extends ModuleServiceProvider
 {
     /**
      * The laravel application instance.
