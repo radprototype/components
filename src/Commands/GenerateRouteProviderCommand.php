@@ -47,13 +47,13 @@ class GenerateRouteProviderCommand extends Command
         $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/route-provider.stub', [
-            'NAMESPACE'        => $this->getClassNamespace($component),
-            'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $component->getLowerName(),
-            'MODULE'           => $this->getComponentName(),
-            'NAME'             => $this->getFileName(),
-            'STUDLY_NAME'      => $component->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
+            'NAMESPACE'           => $this->getClassNamespace($component),
+            'CLASS'               => $this->getClass(),
+            'LOWER_NAME'          => $component->getLowerName(),
+            'COMPONENT'           => $this->getComponentName(),
+            'NAME'                => $this->getFileName(),
+            'STUDLY_NAME'         => $component->getStudlyName(),
+            'COMPONENT_NAMESPACE' => $this->laravel['components']->config('namespace'),
         ]))->render();
     }
 
