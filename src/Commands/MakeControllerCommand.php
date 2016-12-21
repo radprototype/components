@@ -54,16 +54,16 @@ class MakeControllerCommand extends Command
         $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub($this->getStubName(), [
-            'MODULENAME'       => $component->getStudlyName(),
-            'CONTROLLERNAME'   => $this->getControllerName(),
-            'NAMESPACE'        => $component->getStudlyName(),
-            'CLASS_NAMESPACE'  => $this->getClassNamespace($component),
-            'CLASS'            => $this->getControllerName(),
-            'LOWER_NAME'       => $component->getLowerName(),
-            'MODULE'           => $this->getComponentName(),
-            'NAME'             => $this->getComponentName(),
-            'STUDLY_NAME'      => $component->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
+            'COMPONENTNAME'       => $component->getStudlyName(),
+            'CONTROLLERNAME'      => $this->getControllerName(),
+            'NAMESPACE'           => $component->getStudlyName(),
+            'CLASS_NAMESPACE'     => $this->getClassNamespace($component),
+            'CLASS'               => $this->getControllerName(),
+            'LOWER_NAME'          => $component->getLowerName(),
+            'COMPONENT'           => $this->getComponentName(),
+            'NAME'                => $this->getComponentName(),
+            'STUDLY_NAME'         => $component->getStudlyName(),
+            'COMPONENT_NAMESPACE' => $this->laravel['components']->config('namespace'),
         ]))->render();
     }
 
