@@ -68,9 +68,8 @@ class SeedMakeCommand extends Command
 
         return (new Stub('/seeder.stub', [
             'NAME'      => $this->getSeederName(),
-            'MODULE'    => $this->getComponentName(),
+            'COMPONENT' => $this->getComponentName(),
             'NAMESPACE' => $this->getClassNamespace($component),
-
         ]))->render();
     }
 
