@@ -80,7 +80,7 @@ class ComponentGenerator extends Generator
         $this->config     = $config;
         $this->filesystem = $filesystem;
         $this->console    = $console;
-        $this->component     = $component;
+        $this->component  = $component;
     }
 
     /**
@@ -313,20 +313,20 @@ class ComponentGenerator extends Generator
     public function generateResources()
     {
         $this->console->call('component:make-seed', [
-            'name'     => $this->getName(),
-            'component'   => $this->getName(),
-            '--master' => true,
+            'name'      => $this->getName(),
+            'component' => $this->getName(),
+            '--master'  => true,
         ]);
 
         $this->console->call('component:make-provider', [
-            'name'     => $this->getName() . 'ServiceProvider',
-            'component'   => $this->getName(),
-            '--master' => true,
+            'name'      => $this->getName() . 'ServiceProvider',
+            'component' => $this->getName(),
+            '--master'  => true,
         ]);
 
         $this->console->call('component:make-controller', [
             'controller' => $this->getName() . 'Controller',
-            'component'     => $this->getName(),
+            'component'  => $this->getName(),
         ]);
     }
 
@@ -414,7 +414,7 @@ class ComponentGenerator extends Generator
     }
 
     /**
-     * Get replacement for $MODULE_NAMESPACE$.
+     * Get replacement for $COMPONENT_NAMESPACE$.
      *
      * @return string
      */
