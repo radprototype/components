@@ -68,16 +68,16 @@ class GenerateProviderCommand extends Command
         $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/' . $stub . '.stub', [
-            'NAMESPACE'        => $this->getClassNamespace($component),
-            'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $component->getLowerName(),
-            'MODULE'           => $this->getComponentName(),
-            'NAME'             => $this->getFileName(),
-            'STUDLY_NAME'      => $component->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
-            'PATH_VIEWS'       => $this->laravel['config']->get('components.paths.generator.views'),
-            'PATH_LANG'        => $this->laravel['config']->get('components.paths.generator.lang'),
-            'PATH_CONFIG'      => $this->laravel['config']->get('components.paths.generator.config'),
+            'NAMESPACE'           => $this->getClassNamespace($component),
+            'CLASS'               => $this->getClass(),
+            'LOWER_NAME'          => $component->getLowerName(),
+            'COMPONENT'           => $this->getComponentName(),
+            'NAME'                => $this->getFileName(),
+            'STUDLY_NAME'         => $component->getStudlyName(),
+            'COMPONENT_NAMESPACE' => $this->laravel['components']->config('namespace'),
+            'PATH_VIEWS'          => $this->laravel['config']->get('components.paths.generator.views'),
+            'PATH_LANG'           => $this->laravel['config']->get('components.paths.generator.lang'),
+            'PATH_CONFIG'         => $this->laravel['config']->get('components.paths.generator.config'),
         ]))->render();
     }
 
