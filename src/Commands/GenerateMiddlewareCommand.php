@@ -53,13 +53,13 @@ class GenerateMiddlewareCommand extends Command
         $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/middleware.stub', [
-            'NAMESPACE'        => $this->getClassNamespace($component),
-            'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $component->getLowerName(),
-            'MODULE'           => $this->getComponentName(),
-            'NAME'             => $this->getFileName(),
-            'STUDLY_NAME'      => $this->getFileName(),
-            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
+            'NAMESPACE'           => $this->getClassNamespace($component),
+            'CLASS'               => $this->getClass(),
+            'LOWER_NAME'          => $component->getLowerName(),
+            'COMPONENT'           => $this->getComponentName(),
+            'NAME'                => $this->getFileName(),
+            'STUDLY_NAME'         => $this->getFileName(),
+            'COMPONENT_NAMESPACE' => $this->laravel['components']->config('namespace'),
         ]))->render();
     }
 
