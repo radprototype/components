@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Recipe\Entities;
+namespace Components\Recipe\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Publishing;
+namespace Rad\Components\Publishing;
 
 class LangPublisher extends Publisher
 {
@@ -18,7 +18,7 @@ class LangPublisher extends Publisher
      */
     public function getDestinationPath()
     {
-        $name = $this->module->getLowerName();
+        $name = $this->component->getLowerName();
 
         return base_path("resources/lang/{$name}");
     }
@@ -30,7 +30,7 @@ class LangPublisher extends Publisher
      */
     public function getSourcePath()
     {
-        return $this->getModule()->getExtraPath(
+        return $this->getComponent()->getExtraPath(
             $this->repository->config('paths.generator.lang')
         );
     }

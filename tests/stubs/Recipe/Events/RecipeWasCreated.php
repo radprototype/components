@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Recipe\Events;
+namespace Components\Recipe\Events;
 
-use Modules\Media\Contracts\StoringMedia;
+use Components\Media\Contracts\StoringMedia;
 
 class RecipeWasCreated implements StoringMedia
 {

@@ -1,11 +1,11 @@
 {
 	"name": "rad/recipe",
 	"description": "",
-    "type": "asgard-module",
+    "type": "asgard-component",
     "require": {
         "php": ">=5.4",
         "composer/installers": "~1.0",
-        "asgardcms/core-module": "~1.0"
+        "asgardcms/core-component": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
@@ -13,8 +13,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\Recipe\\": ".",
-            "Modules\\": "Modules/"
+            "Components\\Recipe\\": ".",
+            "Components\\": "Components/"
         }
     },
     "minimum-stability": "dev",
@@ -27,7 +27,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"Modules\\Recipe\\": ""
+			"Components\\Recipe\\": ""
 		}
 	}
 }

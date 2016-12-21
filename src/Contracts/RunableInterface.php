@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Contracts;
+namespace Rad\Components\Contracts;
 
 interface RunableInterface
 {

@@ -1,25 +1,25 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-class ListCommand extends ModuleCommand
+class ListCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:list';
+    protected $name = 'component:list';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Show list of all modules.';
+    protected $description = 'Show list of all components.';
 
     /**
      * Execute the console command.
@@ -40,35 +40,35 @@ class ListCommand extends ModuleCommand
     {
         $rows = [];
 
-        foreach ($this->getModules() as $module) {
+        foreach ($this->getComponents() as $component) {
             $rows[] = [
-                $module->getStudlyName(),
-                $module->enabled() ? 'Enabled' : 'Disabled',
-                $module->get('order'),
-                $module->getPath(),
+                $component->getStudlyName(),
+                $component->enabled() ? 'Enabled' : 'Disabled',
+                $component->get('order'),
+                $component->getPath(),
             ];
         }
 
         return $rows;
     }
 
-    public function getModules()
+    public function getComponents()
     {
         switch ($this->option('only')) {
             case 'enabled':
-                return $this->laravel['modules']->getByStatus(1);
+                return $this->laravel['components']->getByStatus(1);
                 break;
 
             case 'disabled':
-                return $this->laravel['modules']->getByStatus(0);
+                return $this->laravel['components']->getByStatus(0);
                 break;
 
             case 'ordered':
-                return $this->laravel['modules']->getOrdered($this->option('direction'));
+                return $this->laravel['components']->getOrdered($this->option('direction'));
                 break;
 
             default:
-                return $this->laravel['modules']->all();
+                return $this->laravel['components']->all();
                 break;
         }
     }
@@ -81,7 +81,7 @@ class ListCommand extends ModuleCommand
     protected function getOptions()
     {
         return [
-            ['only', null, InputOption::VALUE_OPTIONAL, 'Types of modules will be displayed.', null],
+            ['only', null, InputOption::VALUE_OPTIONAL, 'Types of components will be displayed.', null],
             ['direction', 'd', InputOption::VALUE_OPTIONAL, 'The direction of ordering.', 'asc'],
         ];
     }

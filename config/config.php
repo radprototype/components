@@ -4,21 +4,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Module Namespace
+    | Component Namespace
     |--------------------------------------------------------------------------
     |
-    | Default module namespace.
+    | Default component namespace.
     |
     */
 
-    'namespace' => 'App\Modules',
+    'namespace' => 'App\Components',
 
     /*
     |--------------------------------------------------------------------------
-    | Module Stubs
+    | Component Stubs
     |--------------------------------------------------------------------------
     |
-    | Default module stubs.
+    | Default component stubs.
     |
     */
 
@@ -28,7 +28,7 @@ return [
         'files'        => [
             'start'           => 'start.php',
             'routes'          => 'Http/routes.php',
-            'json'            => 'module.json',
+            'json'            => 'component.json',
             'views/index'     => 'Resources/views/index.blade.php',
             'views/master'    => 'Resources/views/layouts/master.blade.php',
             'scaffold/config' => 'Config/config.php',
@@ -54,31 +54,31 @@ return [
     'paths' => [
         /*
         |--------------------------------------------------------------------------
-        | Modules path
+        | Components path
         |--------------------------------------------------------------------------
         |
-        | This path used for save the generated module. This path also will added
+        | This path used for save the generated component. This path also will added
         | automatically to list of scanned folders.
         |
         */
 
-        'modules' => base_path('app/Modules'),
+        'components' => base_path('app/Components'),
         /*
         |--------------------------------------------------------------------------
-        | Modules assets path
+        | Components assets path
         |--------------------------------------------------------------------------
         |
-        | Here you may update the modules assets path.
+        | Here you may update the components assets path.
         |
         */
 
-        'assets' => public_path('modules'),
+        'assets' => public_path('components'),
         /*
         |--------------------------------------------------------------------------
         | The migrations path
         |--------------------------------------------------------------------------
         |
-        | Where you run 'module:publish-migration' command, where do you publish the
+        | Where you run 'component:publish-migration' command, where do you publish the
         | the migration files?
         |
         */
@@ -89,7 +89,7 @@ return [
         | The seeds path
         |--------------------------------------------------------------------------
         |
-        | Where you run 'module:publish-seed' command, where do you publish the
+        | Where you run 'component:publish-seed' command, where do you publish the
         | the seed files?
         |
         */
@@ -100,7 +100,7 @@ return [
         | Generator path
         |--------------------------------------------------------------------------
         |
-        | Here you may update the modules generator path.
+        | Here you may update the components generator path.
         |
         */
 
@@ -152,7 +152,7 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'rad-modules',
+        'vendor' => 'rad-components',
         'author' => [
             'name'  => 'anonymoussc',
             'email' => '50c5ac69@opayq.com'
@@ -168,12 +168,12 @@ return [
     */
     'cache'    => [
         'enabled'  => false,
-        'key'      => 'rad-modules',
+        'key'      => 'rad-components',
         'lifetime' => 60
     ],
     /*
     |--------------------------------------------------------------------------
-    | Choose what laravel-modules will register as custom namespaces.
+    | Choose what laravel-components will register as custom namespaces.
     | Setting one to false will require to register that part
     | in your own Service Provider class.
     |--------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class ModelCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class ModelCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_a_new_model_class()
     {
-        $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog']);
+        $this->artisan('component:make-model', ['model' => 'Post', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Entities/Post.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Entities/Post.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog']);
+        $this->artisan('component:make-model', ['model' => 'Post', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Entities/Post.php');
+        $file = $this->finder->get($this->componentPath . '/Entities/Post.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -50,9 +50,9 @@ class ModelCommandTest extends BaseTestCase
     /** @test */
     public function it_generates_correct_fillable_fields()
     {
-        $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '--fillable' => 'title,slug']);
+        $this->artisan('component:make-model', ['model' => 'Post', 'component' => 'Blog', '--fillable' => 'title,slug']);
 
-        $file = $this->finder->get($this->modulePath . '/Entities/Post.php');
+        $file = $this->finder->get($this->componentPath . '/Entities/Post.php');
 
         $this->assertTrue(str_contains($file, "protected \$fillable = [\"title\",\"slug\"];"));
     }
@@ -62,7 +62,7 @@ class ModelCommandTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Entities;
+namespace Components\Blog\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 

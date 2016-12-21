@@ -1,16 +1,16 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
 use Illuminate\Support\Str;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class GenerateProviderCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The name of argument name.
@@ -24,14 +24,14 @@ class GenerateProviderCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-provider';
+    protected $name = 'component:make-provider';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new service provider for the specified module.';
+    protected $description = 'Generate a new service provider for the specified component.';
 
     /**
      * Get the console command arguments.
@@ -42,7 +42,7 @@ class GenerateProviderCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The service provider name.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -65,19 +65,19 @@ class GenerateProviderCommand extends Command
     {
         $stub = $this->option('master') ? 'scaffold/provider' : 'provider';
 
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/' . $stub . '.stub', [
-            'NAMESPACE'        => $this->getClassNamespace($module),
+            'NAMESPACE'        => $this->getClassNamespace($component),
             'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $module->getLowerName(),
-            'MODULE'           => $this->getModuleName(),
+            'LOWER_NAME'       => $component->getLowerName(),
+            'MODULE'           => $this->getComponentName(),
             'NAME'             => $this->getFileName(),
-            'STUDLY_NAME'      => $module->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
-            'PATH_VIEWS'       => $this->laravel['config']->get('modules.paths.generator.views'),
-            'PATH_LANG'        => $this->laravel['config']->get('modules.paths.generator.lang'),
-            'PATH_CONFIG'      => $this->laravel['config']->get('modules.paths.generator.config'),
+            'STUDLY_NAME'      => $component->getStudlyName(),
+            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
+            'PATH_VIEWS'       => $this->laravel['config']->get('components.paths.generator.views'),
+            'PATH_LANG'        => $this->laravel['config']->get('components.paths.generator.lang'),
+            'PATH_CONFIG'      => $this->laravel['config']->get('components.paths.generator.config'),
         ]))->render();
     }
 
@@ -86,9 +86,9 @@ class GenerateProviderCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $generatorPath = $this->laravel['modules']->config('paths.generator.provider');
+        $generatorPath = $this->laravel['components']->config('paths.generator.provider');
 
         return $path . $generatorPath . '/' . $this->getFileName() . '.php';
     }

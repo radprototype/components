@@ -1,24 +1,24 @@
-# Laravel-Modules
+# Laravel-Components
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/rad-laravel/modules.svg?style=flat-square)](https://packagist.org/packages/rad-laravel/modules)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/rad-laravel/components.svg?style=flat-square)](https://packagist.org/packages/rad-laravel/components)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/rad-laravel/modules/master.svg?style=flat-square)](https://travis-ci.org/rad-laravel/modules)
-[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/rad-laravel/modules.svg?maxAge=86400&style=flat-square)](https://scrutinizer-ci.com/g/rad-laravel/modules/?branch=master)
+[![Build Status](https://img.shields.io/travis/rad-laravel/components/master.svg?style=flat-square)](https://travis-ci.org/rad-laravel/components)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/rad-laravel/components.svg?maxAge=86400&style=flat-square)](https://scrutinizer-ci.com/g/rad-laravel/components/?branch=master)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/25320a08-8af4-475e-a23e-3321f55bf8d2.svg?style=flat-square)](https://insight.sensiolabs.com/projects/25320a08-8af4-475e-a23e-3321f55bf8d2)
-[![Quality Score](https://img.shields.io/scrutinizer/g/rad-laravel/modules.svg?style=flat-square)](https://scrutinizer-ci.com/g/rad-laravel/modules)
-[![Total Downloads](https://img.shields.io/packagist/dt/rad-laravel/modules.svg?style=flat-square)](https://packagist.org/packages/rad-laravel/modules)
+[![Quality Score](https://img.shields.io/scrutinizer/g/rad-laravel/components.svg?style=flat-square)](https://scrutinizer-ci.com/g/rad-laravel/components)
+[![Total Downloads](https://img.shields.io/packagist/dt/rad-laravel/components.svg?style=flat-square)](https://packagist.org/packages/rad-laravel/components)
 
 
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Naming Convension](#naming-convension)
 - [Folder Structure](#folder-structure)
-- [Creating Module](#creating-a-module)
+- [Creating Component](#creating-a-component)
 - [Artisan Commands](#artisan-commands)
 - [Facades](#facades)
 - [Entity](#entity)
 - [Auto Scan Vendor Directory](#auto-scan-vendor-directory)
-- [Publishing Modules](#publishing-modules)
+- [Publishing Components](#publishing-components)
 
 
 <a name="installation"></a>
@@ -34,7 +34,7 @@ Add the following service provider in `config/app.php`.
 
 ```php
 'providers' => [
-  Rad\Modules\ServiceProvider::class,
+  Rad\Components\ServiceProvider::class,
 ],
 ```
 
@@ -42,24 +42,24 @@ Add the following aliases to `aliases` array in the same file.
 
 ```php
 'aliases' => [
-  'Module' => Rad\Modules\Facades\Module::class,
+  'Component' => Rad\Components\Facades\Component::class,
 ],
 ```
 
 Publish the package's configuration file by running :
 
 ```
-php artisan vendor:publish --provider="Rad\Modules\ServiceProvider"
+php artisan vendor:publish --provider="Rad\Components\ServiceProvider"
 ```
 
 <a name="configuration"></a>
 ## Configuration
 
-- `modules` - Used for save the generated modules.
-- `assets` - Used for save the modules's assets from each modules.
-- `migration` - Used for save the modules's migrations if you publish the modules's migrations.
-- `seed` - Used for save the modules's seeds if you publish the modules's seeds.
-- `generator` - Used for generate modules folders.
+- `components` - Used for save the generated components.
+- `assets` - Used for save the components's assets from each components.
+- `migration` - Used for save the components's migrations if you publish the components's migrations.
+- `seed` - Used for save the components's seeds if you publish the components's seeds.
+- `generator` - Used for generate components folders.
 - `scan` - Used for allow to scan other folders.
 - `enabled` - If `true`, the package will scan other paths. By default the value is `false`
 - `paths` - The list of path which can scanned automatically by the package.
@@ -68,57 +68,57 @@ php artisan vendor:publish --provider="Rad\Modules\ServiceProvider"
 - `author.name` - Composer author name.
 - `author.email` - Composer author email.
 - `cache`
-- `enabled` - If `true`, the scanned modules (all modules) will cached automatically. By default the value is `false`
+- `enabled` - If `true`, the scanned components (all components) will cached automatically. By default the value is `false`
 - `key` - The name of cache.
 - `lifetime` - Lifetime of cache.
 
-## Setting up modules folders for first use
+## Setting up components folders for first use
 
 ```
-php artisan module:setup
+php artisan component:setup
 ```
 
-<a name="creating-a-module"></a>
-## Creating A Module
+<a name="creating-a-component"></a>
+## Creating A Component
 
-To create a new module you can simply run :
-
-```
-php artisan module:make <module-name>
-```
-
-- `<module-name>` - Required. The name of module will be created.
-
-**Create a new module**
+To create a new component you can simply run :
 
 ```
-php artisan module:make Blog
+php artisan component:make <component-name>
 ```
 
-**Create multiple modules**
+- `<component-name>` - Required. The name of component will be created.
+
+**Create a new component**
 
 ```
-php artisan module:make Blog User Auth
+php artisan component:make Blog
 ```
 
-By default if you create a new module, that will add some resources like controller, seed class or provider automatically. If you don't want these, you can add `--plain` flag, to generate a plain module.
+**Create multiple components**
+
+```
+php artisan component:make Blog User Auth
+```
+
+By default if you create a new component, that will add some resources like controller, seed class or provider automatically. If you don't want these, you can add `--plain` flag, to generate a plain component.
 
 ```shell
-php artisan module:make Blog --plain
+php artisan component:make Blog --plain
 #OR
-php artisan module:make Blog -p
+php artisan component:make Blog -p
 ```
 
 <a name="naming-convension"></a>
 **Naming Convension**
 
-Because we are autoloading the modules using `psr-4`, we strongly recommend using `StudlyCase` convension.
+Because we are autoloading the components using `psr-4`, we strongly recommend using `StudlyCase` convension.
 
 <a name="folder-structure"></a>
 **Folder Structure**
 
 ```
-your-laravel/app/Modules/
+your-laravel/app/Components/
   ├── Blog/
       ├── Config/
       ├── Console/
@@ -143,463 +143,463 @@ your-laravel/app/Modules/
           ├── views/
       ├── Tests/
       ├── composer.json
-      ├── module.json
+      ├── component.json
       ├── start.php
 ```
 
 <a name="artisan-commands"></a>
 ## Artisan Commands
 
-Setting up modules folders for first use
+Setting up components folders for first use
 
 ```
-php artisan module:setup
+php artisan component:setup
 ```
 
-Create new module.
+Create new component.
 
 ```
-php artisan module:make blog
+php artisan component:make blog
 ```
 
-Use the specified module.
+Use the specified component.
 
 ```
-php artisan module:use blog
+php artisan component:use blog
 ```
 
-Show all modules in command line.
+Show all components in command line.
 
 ```
-php artisan module:list
+php artisan component:list
 ```
 
-Create new command for the specified module.
+Create new command for the specified component.
 
 ```
-php artisan module:make-command CustomCommand blog
+php artisan component:make-command CustomCommand blog
 
-php artisan module:make-command CustomCommand --command=custom:command blog
+php artisan component:make-command CustomCommand --command=custom:command blog
 
-php artisan module:make-command CustomCommand --namespace=Modules\Blog\Commands blog
+php artisan component:make-command CustomCommand --namespace=Components\Blog\Commands blog
 ```
 
-Create new migration for the specified module.
+Create new migration for the specified component.
 
 ```
-php artisan module:make-migration create_users_table blog
+php artisan component:make-migration create_users_table blog
 
-php artisan module:make-migration create_users_table --fields="username:string, password:string" blog
+php artisan component:make-migration create_users_table --fields="username:string, password:string" blog
 
-php artisan module:make-migration add_email_to_users_table --fields="email:string:unique" blog
+php artisan component:make-migration add_email_to_users_table --fields="email:string:unique" blog
 
-php artisan module:make-migration remove_email_from_users_table --fields="email:string:unique" blog
+php artisan component:make-migration remove_email_from_users_table --fields="email:string:unique" blog
 
-php artisan module:make-migration drop_users_table blog
+php artisan component:make-migration drop_users_table blog
 ```
 
-Rollback, Reset and Refresh The Modules Migrations.
+Rollback, Reset and Refresh The Components Migrations.
 
 ```
-php artisan module:migrate-rollback
+php artisan component:migrate-rollback
 
-php artisan module:migrate-reset
+php artisan component:migrate-reset
 
-php artisan module:migrate-refresh
+php artisan component:migrate-refresh
 ```
 
-Rollback, Reset and Refresh The Migrations for the specified module.
+Rollback, Reset and Refresh The Migrations for the specified component.
 
 ```
-php artisan module:migrate-rollback blog
+php artisan component:migrate-rollback blog
 
-php artisan module:migrate-reset blog
+php artisan component:migrate-reset blog
 
-php artisan module:migrate-refresh blog
+php artisan component:migrate-refresh blog
 ```
 
-Migrate from the specified module.
+Migrate from the specified component.
 
 ```
-php artisan module:migrate blog
+php artisan component:migrate blog
 ```
 
-Migrate from all modules.
+Migrate from all components.
 
 ```
-php artisan module:migrate
+php artisan component:migrate
 ```
 
-Create new seed for the specified module.
+Create new seed for the specified component.
 
 ```
-php artisan module:make-seed users blog
+php artisan component:make-seed users blog
 ```
 
-Seed from the specified module.
+Seed from the specified component.
 
 ```
-php artisan module:seed blog
+php artisan component:seed blog
 ```
 
-Seed from all modules.
+Seed from all components.
 
 ```
-php artisan module:seed
+php artisan component:seed
 ```
 
-Create new controller for the specified module.
+Create new controller for the specified component.
 
 ```
-php artisan module:make-controller SiteController blog
+php artisan component:make-controller SiteController blog
 ```
 
-Publish assets from the specified module to public directory.
+Publish assets from the specified component to public directory.
 
 ```
-php artisan module:publish-asset blog
+php artisan component:publish-asset blog
 ```
 
-Publish assets from all modules to public directory.
+Publish assets from all components to public directory.
 
 ```
-php artisan module:publish-asset
+php artisan component:publish-asset
 ```
 
-Create new model for the specified module.
+Create new model for the specified component.
 
 ```
-php artisan module:make-model User blog
+php artisan component:make-model User blog
 
-php artisan module:make-model User blog --fillable="username,email,password"
+php artisan component:make-model User blog --fillable="username,email,password"
 ```
 
-Create new service provider for the specified module.
+Create new service provider for the specified component.
 
 ```
-php artisan module:make-provider MyServiceProvider blog
+php artisan component:make-provider MyServiceProvider blog
 ```
 
-Publish migration for the specified module or for all modules.
+Publish migration for the specified component or for all components.
 
-This helpful when you want to rollback the migrations. You can also run `php artisan migrate` instead of `php artisan module:migrate` command for migrate the migrations.
+This helpful when you want to rollback the migrations. You can also run `php artisan migrate` instead of `php artisan component:migrate` command for migrate the migrations.
 
-For the specified module.
-
-```
-php artisan module:publish-migration blog
-```
-
-For all modules.
+For the specified component.
 
 ```
-php artisan module:publish-migration
+php artisan component:publish-migration blog
 ```
 
-Publish seed for the specified module or for all modules.
-
-This helpful when you want to rollback the seeds. You can also run `php artisan db:seed` instead of `php artisan module:seed` command for migrate the seeds.
-
-For the specified module.
+For all components.
 
 ```
-php artisan module:publish-seed blog
+php artisan component:publish-migration
 ```
 
-For all modules.
+Publish seed for the specified component or for all components.
+
+This helpful when you want to rollback the seeds. You can also run `php artisan db:seed` instead of `php artisan component:seed` command for migrate the seeds.
+
+For the specified component.
 
 ```
-php artisan module:publish-seed
+php artisan component:publish-seed blog
 ```
 
-Publish module configuration files
+For all components.
 
 ```
-php artisan module:publish-config <module-name>
+php artisan component:publish-seed
 ```
 
-- (optional) `module-name`: The name of the module to publish configuration. Leaving blank will publish all modules.
+Publish component configuration files
+
+```
+php artisan component:publish-config <component-name>
+```
+
+- (optional) `component-name`: The name of the component to publish configuration. Leaving blank will publish all components.
 - (optional) `--force`: To force the publishing, overwriting already published files
 
-Enable the specified module.
+Enable the specified component.
 
 
 ```
-php artisan module:enable blog
+php artisan component:enable blog
 ```
 
-Disable the specified module.
+Disable the specified component.
 
 ```
-php artisan module:disable blog
+php artisan component:disable blog
 ```
 
 Generate new middleware class.
 
 ```
-php artisan module:make-middleware Auth
+php artisan component:make-middleware Auth
 ```
 
 Generate new mailable class.
 
 ```
-php artisan module:make-mail WelcomeEmail
+php artisan component:make-mail WelcomeEmail
 ```
 
 Generate new notification class.
 
 ```
-php artisan module:make-notification InvoicePaid
+php artisan component:make-notification InvoicePaid
 ```
 
-Update dependencies for the specified module.
+Update dependencies for the specified component.
 
 ```
-php artisan module:update ModuleName
+php artisan component:update ComponentName
 ```
 
-Update dependencies for all modules.
+Update dependencies for all components.
 
 ```
-php artisan module:update
+php artisan component:update
 ```
 
-Show the list of modules.
+Show the list of components.
 
 ```
-php artisan module:list
+php artisan component:list
 ```
 
 <a name="facades"></a>
 ## Facades
 
-Get all modules.
+Get all components.
 
 ```php
-Module::all();
+Component::all();
 ```
 
-Get all cached modules.
+Get all cached components.
 
 ```php
-Module::getCached()
+Component::getCached()
 ```
 
-Get ordered modules. The modules will be ordered by the `priority` key in `module.json` file.
+Get ordered components. The components will be ordered by the `priority` key in `component.json` file.
 
 ```php
-Module::getOrdered();
+Component::getOrdered();
 ```
 
-Get scanned modules.
+Get scanned components.
 
 ```php
-Module::scan();
+Component::scan();
 ```
 
-Find a specific module.
+Find a specific component.
 
 ```php
-Module::find('name');
+Component::find('name');
 // OR
-Module::get('name');
+Component::get('name');
 ```
 
-Find a module, if there is one, return the `Module` instance, otherwise throw `Rad\Modules\Exeptions\ModuleNotFoundException`.
+Find a component, if there is one, return the `Component` instance, otherwise throw `Rad\Components\Exeptions\ComponentNotFoundException`.
 
 ```php
-Module::findOrFail('module-name');
+Component::findOrFail('component-name');
 ```
 
 Get scanned paths.
 
 ```php
-Module::getScanPaths();
+Component::getScanPaths();
 ```
 
-Get all modules as a collection instance.
+Get all components as a collection instance.
 
 ```php
-Module::toCollection();
+Component::toCollection();
 ```
 
-Get modules by the status. 1 for active and 0 for inactive.
+Get components by the status. 1 for active and 0 for inactive.
 
 ```php
-Module::getByStatus(1);
+Component::getByStatus(1);
 ```
 
-Check the specified module. If it exists, will return `true`, otherwise `false`.
+Check the specified component. If it exists, will return `true`, otherwise `false`.
 
 ```php
-Module::has('blog');
+Component::has('blog');
 ```
 
-Get all enabled modules.
+Get all enabled components.
 
 ```php
-Module::enabled();
+Component::enabled();
 ```
 
-Get all disabled modules.
+Get all disabled components.
 
 ```php
-Module::disabled();
+Component::disabled();
 ```
 
-Get count of all modules.
+Get count of all components.
 
 ```php
-Module::count();
+Component::count();
 ```
 
-Get module path.
+Get component path.
 
 ```php
-Module::getPath();
+Component::getPath();
 ```
 
-Register the modules.
+Register the components.
 
 ```php
-Module::register();
+Component::register();
 ```
 
-Boot all available modules.
+Boot all available components.
 
 ```php
-Module::boot();
+Component::boot();
 ```
 
-Get all enabled modules as collection instance.
+Get all enabled components as collection instance.
 
 ```php
-Module::collections();
+Component::collections();
 ```
 
-Get module path from the specified module.
+Get component path from the specified component.
 
 ```php
-Module::getModulePath('name');
+Component::getComponentPath('name');
 ```
 
-Get assets path from the specified module.
+Get assets path from the specified component.
 
 ```php
-Module::assetPath('name');
+Component::assetPath('name');
 ```
 
 Get config value from this package.
 
 ```php
-Module::config('composer.vendor');
+Component::config('composer.vendor');
 ```
 
 Get used storage path.
 
 ```php
-Module::getUsedStoragePath();
+Component::getUsedStoragePath();
 ```
 
-Get used module for cli session.
+Get used component for cli session.
 
 ```php
-Module::getUsedNow();
+Component::getUsedNow();
 // OR
-Module::getUsed();
+Component::getUsed();
 ```
 
-Set used module for cli session.
+Set used component for cli session.
 
 ```php
-Module::setUsed('name');
+Component::setUsed('name');
 ```
 
-Get modules's assets path.
+Get components's assets path.
 
 ```php
-Module::getAssetsPath();
+Component::getAssetsPath();
 ```
 
-Get asset url from specific module.
+Get asset url from specific component.
 
 ```php
-Module::asset('blog::img/logo.img');
+Component::asset('blog::img/logo.img');
 ```
 
-Install the specified module by given module name.
+Install the specified component by given component name.
 
 ```php
-Module::install('Rad/hello');
+Component::install('Rad/hello');
 ```
 
-Update dependencies for the specified module.
+Update dependencies for the specified component.
 
 ```php
-Module::update('hello');
+Component::update('hello');
 ```
 
 <a name="entity"></a>
-## Module Entity
+## Component Entity
 
-Get an entity from a specific module.
+Get an entity from a specific component.
 
 ```php
-$module = Module::find('blog');
+$component = Component::find('blog');
 ```
 
-Get module name.
+Get component name.
 
 ```php
-$module->getName();
+$component->getName();
 ```
 
-Get module name in lowercase.
+Get component name in lowercase.
 
 ```php
-$module->getLowerName();
+$component->getLowerName();
 ```
 
-Get module name in studlycase.
+Get component name in studlycase.
 
 ```php
-$module->getStudlyName();
+$component->getStudlyName();
 ```
 
-Get module path.
+Get component path.
 
 ```php
-$module->getPath();
+$component->getPath();
 ```
 
 Get extra path.
 
 ```php
-$module->getExtraPath('Assets');
+$component->getExtraPath('Assets');
 ```
 
-Disable the specified module.
+Disable the specified component.
 
 ```php
-$module->enable();
+$component->enable();
 ```
 
-Enable the specified module.
+Enable the specified component.
 
 ```php
-$module->disable();
+$component->disable();
 ```
 
-Delete the specified module.
+Delete the specified component.
 
 ```php
-$module->delete();
+$component->delete();
 ```
 
 <a name="namespaces"></a>
 ## Custom Namespaces
 
-When you create a new module it also registers new custom namespace for `Lang`, `View` and `Config`. For example, if you create a new module named blog, it will also register new namespace/hint blog for that module. Then, you can use that namespace for calling `Lang`, `View` or `Config`. Following are some examples of its usage:
+When you create a new component it also registers new custom namespace for `Lang`, `View` and `Config`. For example, if you create a new component named blog, it will also register new namespace/hint blog for that component. Then, you can use that namespace for calling `Lang`, `View` or `Config`. Following are some examples of its usage:
 
 Calling Lang:
 
@@ -621,9 +621,9 @@ Calling Config:
 Config::get('blog.name')
 ```
 
-## Publishing Modules
+## Publishing Components
 
-Have you created a laravel modules? Yes, I've. Then, I want to publish my modules. Where do I publish it? That's the question. What's the answer ? The answer is [Packagist](http://packagist.org).
+Have you created a laravel components? Yes, I've. Then, I want to publish my components. Where do I publish it? That's the question. What's the answer ? The answer is [Packagist](http://packagist.org).
 
 <a name="auto-scan-vendor-directory"></a>
 ### Auto Scan Vendor Directory
@@ -631,7 +631,7 @@ Have you created a laravel modules? Yes, I've. Then, I want to publish my module
 By default the `vendor` directory is not scanned automatically, you need to update the configuration file to allow that. Set `scan.enabled` value to `true`. For example :
 
 ```php
-// file config/modules.php
+// file config/components.php
 
 return [
   //...
@@ -642,22 +642,22 @@ return [
 ]
 ```
 
-You can verify the module has been installed using `module:list` command:
+You can verify the component has been installed using `component:list` command:
 
 ```
-php artisan module:list
+php artisan component:list
 ```
 
-<a name="publishing-modules"></a>
-## Publishing Modules
+<a name="publishing-components"></a>
+## Publishing Components
 
-After creating a module and you are sure your module module will be used by other developers. You can push your module to [github](https://github.com) or [bitbucket](https://bitbucket.org) and after that you can submit your module to the packagist website.
+After creating a component and you are sure your component component will be used by other developers. You can push your component to [github](https://github.com) or [bitbucket](https://bitbucket.org) and after that you can submit your component to the packagist website.
 
-You can follow this step to publish your module.
+You can follow this step to publish your component.
 
-1. Create A Module.
-2. Push the module to github.
-3. Submit your module to the packagist website.
+1. Create A Component.
+2. Push the component to github.
+3. Submit your component to the packagist website.
 Submit to packagist is very easy, just give your github repository, click submit and you done.
 
 

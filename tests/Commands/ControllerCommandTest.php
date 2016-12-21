@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class ControllerCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class ControllerCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_a_new_controller_class()
     {
-        $this->artisan('module:make-controller', ['controller' => 'MyController', 'module' => 'Blog']);
+        $this->artisan('component:make-controller', ['controller' => 'MyController', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Http/Controllers/MyController.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Http/Controllers/MyController.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-controller', ['controller' => 'MyController', 'module' => 'Blog']);
+        $this->artisan('component:make-controller', ['controller' => 'MyController', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Controllers/MyController.php');
+        $file = $this->finder->get($this->componentPath . '/Http/Controllers/MyController.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -50,17 +50,17 @@ class ControllerCommandTest extends BaseTestCase
     /** @test */
     public function it_appends_controller_to_name_if_not_present()
     {
-        $this->artisan('module:make-controller', ['controller' => 'My', 'module' => 'Blog']);
+        $this->artisan('component:make-controller', ['controller' => 'My', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Http/Controllers/MyController.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Http/Controllers/MyController.php'));
     }
 
     /** @test */
     public function it_appends_controller_to_class_name_if_not_present()
     {
-        $this->artisan('module:make-controller', ['controller' => 'My', 'module' => 'Blog']);
+        $this->artisan('component:make-controller', ['controller' => 'My', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Controllers/MyController.php');
+        $file = $this->finder->get($this->componentPath . '/Http/Controllers/MyController.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -68,13 +68,13 @@ class ControllerCommandTest extends BaseTestCase
     /** @test */
     public function it_generates_a_plain_controller()
     {
-        $this->artisan('module:make-controller', [
+        $this->artisan('component:make-controller', [
             'controller' => 'MyController',
-            'module' => 'Blog',
+            'component' => 'Blog',
             '--plain' => true,
         ]);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Controllers/MyController.php');
+        $file = $this->finder->get($this->componentPath . '/Http/Controllers/MyController.php');
 
         $this->assertEquals($this->expectedPlainContent(), $file);
     }
@@ -84,7 +84,7 @@ class ControllerCommandTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Http\Controllers;
+namespace Components\Blog\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -154,7 +154,7 @@ TEXT;
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Http\Controllers;
+namespace Components\Blog\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 

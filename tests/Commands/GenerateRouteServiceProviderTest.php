@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class GenerateRouteServiceProviderTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class GenerateRouteServiceProviderTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_a_new_service_provider_class()
     {
-        $this->artisan('module:route-provider', ['module' => 'Blog']);
+        $this->artisan('component:route-provider', ['component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Providers/RouteServiceProvider.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Providers/RouteServiceProvider.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:route-provider', ['module' => 'Blog']);
+        $this->artisan('component:route-provider', ['component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Providers/RouteServiceProvider.php');
+        $file = $this->finder->get($this->componentPath . '/Providers/RouteServiceProvider.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -52,7 +52,7 @@ class GenerateRouteServiceProviderTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Providers;
+namespace Components\Blog\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -64,7 +64,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected \$rootUrlNamespace = 'Modules\Blog\Http\Controllers';
+    protected \$rootUrlNamespace = 'Components\Blog\Http\Controllers';
 
     /**
      * Called before routes are registered.

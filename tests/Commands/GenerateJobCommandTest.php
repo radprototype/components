@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\tests\BaseTestCase;
+use Rad\Components\tests\BaseTestCase;
 
 class GenerateJobCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class GenerateJobCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_the_job_class()
     {
-        $this->artisan('module:make-job', ['name' => 'SomeJob', 'module' => 'Blog']);
+        $this->artisan('component:make-job', ['name' => 'SomeJob', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Jobs/SomeJob.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Jobs/SomeJob.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-job', ['name' => 'SomeJob', 'module' => 'Blog']);
+        $this->artisan('component:make-job', ['name' => 'SomeJob', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Jobs/SomeJob.php');
+        $file = $this->finder->get($this->componentPath . '/Jobs/SomeJob.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -52,7 +52,7 @@ class GenerateJobCommandTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Jobs;
+namespace Components\Blog\Jobs;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

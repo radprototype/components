@@ -1,18 +1,18 @@
 <?php
 
-namespace Rad\Modules\Migrations;
+namespace Rad\Components\Migrations;
 
 use Illuminate\Support\Collection;
-use Rad\Modules\Module;
+use Rad\Components\Component;
 
 class Migrator
 {
     /**
-     * Pingpong Module instance.
+     * Pingpong Component instance.
      *
-     * @var \Rad\Modules\Module
+     * @var \Rad\Components\Component
      */
-    protected $module;
+    protected $component;
 
     /**
      * Laravel Application instance.
@@ -31,12 +31,12 @@ class Migrator
     /**
      * Create new instance.
      *
-     * @param \Rad\Modules\Module $module
+     * @param \Rad\Components\Component $component
      */
-    public function __construct(Module $module)
+    public function __construct(Component $component)
     {
-        $this->module  = $module;
-        $this->laravel = $module->getLaravel();
+        $this->component  = $component;
+        $this->laravel = $component->getLaravel();
     }
 
     /**
@@ -54,11 +54,11 @@ class Migrator
     }
 
     /**
-     * @return Module
+     * @return Component
      */
-    public function getModule()
+    public function getComponent()
     {
-        return $this->module;
+        return $this->component;
     }
 
     /**
@@ -68,11 +68,11 @@ class Migrator
      */
     public function getPath()
     {
-        $config = $this->module->get('migration');
+        $config = $this->component->get('migration');
 
-        $path = (is_array($config) && array_key_exists('path', $config)) ? $config['path'] : config('modules.paths.generator.migration');
+        $path = (is_array($config) && array_key_exists('path', $config)) ? $config['path'] : config('components.paths.generator.migration');
 
-        return $this->module->getExtraPath($path);
+        return $this->component->getExtraPath($path);
     }
 
     /**

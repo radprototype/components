@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class PublishMigrationCommandTest extends BaseTestCase
 {
@@ -13,28 +13,28 @@ class PublishMigrationCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
-        $this->artisan('module:make-migration', ['name' => 'create_posts_table', 'module' => 'Blog']);
+        $this->artisan('component:make', ['name' => ['Blog']]);
+        $this->artisan('component:make-migration', ['name' => 'create_posts_table', 'component' => 'Blog']);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         $this->finder->delete($this->finder->allFiles(base_path('database/migrations')));
         parent::tearDown();
     }
 
     /** @test */
-    public function it_publishes_module_migrations()
+    public function it_publishes_component_migrations()
     {
-        $this->artisan('module:publish-migration', ['module' => 'Blog']);
+        $this->artisan('component:publish-migration', ['component' => 'Blog']);
 
         $files = $this->finder->allFiles(base_path('database/migrations'));
 

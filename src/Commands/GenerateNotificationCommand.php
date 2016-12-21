@@ -1,21 +1,21 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
 final class GenerateNotificationCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:make-notification';
+    protected $name = 'component:make-notification';
 
     protected $argumentName = 'name';
 
@@ -26,10 +26,10 @@ final class GenerateNotificationCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/notification.stub', [
-            'NAMESPACE' => $this->getClassNamespace($module),
+            'NAMESPACE' => $this->getClassNamespace($component),
             'CLASS'     => $this->getClass(),
         ]))->render();
     }
@@ -41,9 +41,9 @@ final class GenerateNotificationCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $mailPath = $this->laravel['modules']->config('paths.generator.notifications', 'Notifications');
+        $mailPath = $this->laravel['components']->config('paths.generator.notifications', 'Notifications');
 
         return $path . $mailPath . '/' . $this->getFileName() . '.php';
     }
@@ -57,7 +57,7 @@ final class GenerateNotificationCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the notification class.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -74,6 +74,6 @@ final class GenerateNotificationCommand extends Command
      */
     public function getDefaultNamespace()
     {
-        return $this->laravel['modules']->config('paths.generator.notifications', 'Notifications');
+        return $this->laravel['components']->config('paths.generator.notifications', 'Notifications');
     }
 }

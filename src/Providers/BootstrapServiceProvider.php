@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Providers;
+namespace Rad\Components\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,7 +11,7 @@ class BootstrapServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app['modules']->boot();
+        $this->app['components']->boot();
     }
 
     /**
@@ -19,6 +19,6 @@ class BootstrapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['modules']->register();
+        $this->app['components']->register();
     }
 }

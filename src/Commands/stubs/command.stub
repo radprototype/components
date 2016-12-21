@@ -2,11 +2,11 @@
 
 namespace $NAMESPACE$;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class $CLASS$ extends ModuleCommand
+class $CLASS$ extends ComponentCommand
 {
     /**
      * The console command name.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class PublishTranslationCommandTest extends BaseTestCase
 {
@@ -13,26 +13,26 @@ class PublishTranslationCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
-    public function it_published_module_translations()
+    public function it_published_component_translations()
     {
-        $this->artisan('module:publish-translation', ['module' => 'Blog']);
+        $this->artisan('component:publish-translation', ['component' => 'Blog']);
 
         $this->assertTrue(is_dir(base_path('resources/lang/blog')));
     }

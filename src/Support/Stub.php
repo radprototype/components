@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Support;
+namespace Rad\Components\Support;
 
 class Stub
 {

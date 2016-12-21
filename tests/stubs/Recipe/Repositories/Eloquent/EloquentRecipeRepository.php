@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Recipe\Repositories\Eloquent;
+namespace Components\Recipe\Repositories\Eloquent;
 
-use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
-use Modules\Recipe\Events\RecipeWasCreated;
-use Modules\Recipe\Repositories\RecipeRepository;
+use Components\Core\Repositories\Eloquent\EloquentBaseRepository;
+use Components\Recipe\Events\RecipeWasCreated;
+use Components\Recipe\Repositories\RecipeRepository;
 
 class EloquentRecipeRepository extends EloquentBaseRepository implements RecipeRepository
 {

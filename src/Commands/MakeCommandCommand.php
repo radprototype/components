@@ -1,16 +1,16 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
 use Illuminate\Support\Str;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class MakeCommandCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The name of argument name.
@@ -24,14 +24,14 @@ class MakeCommandCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-command';
+    protected $name = 'component:make-command';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate new Artisan command for the specified module.';
+    protected $description = 'Generate new Artisan command for the specified component.';
 
     /**
      * Get the console command arguments.
@@ -42,7 +42,7 @@ class MakeCommandCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the command.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -63,11 +63,11 @@ class MakeCommandCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/command.stub', [
             'COMMAND_NAME' => $this->getCommandName(),
-            'NAMESPACE'    => $this->getClassNamespace($module),
+            'NAMESPACE'    => $this->getClassNamespace($component),
             'CLASS'        => $this->getClass(),
         ]))->render();
     }
@@ -77,9 +77,9 @@ class MakeCommandCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $seederPath = $this->laravel['modules']->config('paths.generator.command');
+        $seederPath = $this->laravel['components']->config('paths.generator.command');
 
         return $path . $seederPath . '/' . $this->getFileName() . '.php';
     }

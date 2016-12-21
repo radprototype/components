@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests;
+namespace Rad\Components\tests;
 
-use Rad\Modules\Support\Migrations\NameParser;
+use Rad\Components\Support\Migrations\NameParser;
 
 class NameParserTest extends \PHPUnit_Framework_TestCase
 {

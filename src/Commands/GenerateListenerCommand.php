@@ -1,16 +1,16 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Rad\Modules\Module;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Component;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class GenerateListenerCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     protected $argumentName = 'name';
 
@@ -19,14 +19,14 @@ class GenerateListenerCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-listener';
+    protected $name = 'component:make-listener';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new Listener Class for the specified module';
+    protected $description = 'Generate a new Listener Class for the specified component';
 
     /**
      * Get the console command arguments.
@@ -37,7 +37,7 @@ class GenerateListenerCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the command.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -55,11 +55,11 @@ class GenerateListenerCommand extends Command
 
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/listener.stub', [
-            'NAMESPACE'          => $this->getNamespace($module),
-            "EVENTNAME"          => $this->getEventName($module),
+            'NAMESPACE'          => $this->getNamespace($component),
+            "EVENTNAME"          => $this->getEventName($component),
             "EVENTSHORTENEDNAME" => $this->option('event'),
             "CLASS"              => $this->getClass(),
             'DUMMYNAMESPACE'     => $this->laravel->getNamespace() . "Events",
@@ -68,9 +68,9 @@ class GenerateListenerCommand extends Command
 
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $seederPath = $this->laravel['modules']->config('paths.generator.listener');
+        $seederPath = $this->laravel['components']->config('paths.generator.listener');
 
         return $path . $seederPath . '/' . $this->getFileName() . '.php';
     }
@@ -92,15 +92,15 @@ class GenerateListenerCommand extends Command
         parent::fire();
     }
 
-    protected function getEventName(Module $module)
+    protected function getEventName(Component $component)
     {
-        return $this->getClassNamespace($module) . "\\" . config('modules.paths.generator.event') . "\\" . $this->option('event');
+        return $this->getClassNamespace($component) . "\\" . config('components.paths.generator.event') . "\\" . $this->option('event');
     }
 
-    private function getNamespace($module)
+    private function getNamespace($component)
     {
-        $namespace = str_replace('/', '\\', config('modules.paths.generator.listener'));
+        $namespace = str_replace('/', '\\', config('components.paths.generator.listener'));
 
-        return $this->getClassNamespace($module) . "\\" . $namespace;
+        return $this->getClassNamespace($component) . "\\" . $namespace;
     }
 }

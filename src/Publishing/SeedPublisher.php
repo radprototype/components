@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\Publishing;
+namespace Rad\Components\Publishing;
 
-use Rad\Modules\Migrations\Seeder;
+use Rad\Components\Migrations\Seeder;
 
 class SeedPublisher extends AssetPublisher
 {
@@ -19,7 +19,7 @@ class SeedPublisher extends AssetPublisher
     public function __construct(Seeder $seeder)
     {
         $this->seeder = $seeder;
-        parent::__construct($seeder->getModule());
+        parent::__construct($seeder->getComponent());
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Recipe\Providers;
+namespace Components\Recipe\Providers;
 
-use Modules\Core\Providers\RoutingServiceProvider as CoreRoutingServiceProvider;
+use Components\Core\Providers\RoutingServiceProvider as CoreRoutingServiceProvider;
 
 class RouteServiceProvider extends CoreRoutingServiceProvider
 {
@@ -10,7 +10,7 @@ class RouteServiceProvider extends CoreRoutingServiceProvider
      * The root namespace to assume when generating URLs to actions.
      * @var string
      */
-    protected $namespace = 'Modules\Recipe\Http\Controllers';
+    protected $namespace = 'Components\Recipe\Http\Controllers';
 
     /**
      * @return string

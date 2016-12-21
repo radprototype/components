@@ -34,13 +34,13 @@
                         <hr>
                         <h4>Featured image</h4>
                         @include('media::admin.fields.file-link', [
-                            'entityClass' => 'Modules\\\\Recipe\\\\Entities\\\\Recipe',
+                            'entityClass' => 'Components\\\\Recipe\\\\Entities\\\\Recipe',
                             'entityId' => $recipe->id,
                             'zone' => 'featured_image',
                         ])
                         <hr>
                         @include('media::admin.fields.file-link-multiple', [
-                            'entityClass' => 'Modules\\\\Recipe\\\\Entities\\\\Recipe',
+                            'entityClass' => 'Components\\\\Recipe\\\\Entities\\\\Recipe',
                             'entityId' => $recipe->id,
                             'zone' => 'gallery'
                         ])

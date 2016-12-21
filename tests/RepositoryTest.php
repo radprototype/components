@@ -1,12 +1,12 @@
 <?php
 
-namespace Rad\Modules\tests;
+namespace Rad\Components\tests;
 
 use Illuminate\Filesystem\Filesystem;
-use Rad\Modules\Collection;
-use Rad\Modules\Exceptions\ModuleNotFoundException;
-use Rad\Modules\Module;
-use Rad\Modules\Repository;
+use Rad\Components\Collection;
+use Rad\Components\Exceptions\ComponentNotFoundException;
+use Rad\Components\Component;
+use Rad\Components\Repository;
 
 class RepositoryTest extends BaseTestCase
 {
@@ -43,7 +43,7 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_returns_all_enabled_modules()
+    public function it_returns_all_enabled_components()
     {
         $this->repository->addLocation(__DIR__ . '/stubs');
 
@@ -52,7 +52,7 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_returns_all_disabled_modules()
+    public function it_returns_all_disabled_components()
     {
         $this->repository->addLocation(__DIR__ . '/stubs');
 
@@ -61,7 +61,7 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_counts_all_modules()
+    public function it_counts_all_components()
     {
         $this->repository->addLocation(__DIR__ . '/stubs');
 
@@ -69,29 +69,29 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_finds_a_module()
+    public function it_finds_a_component()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
 
-        $this->assertInstanceOf(Module::class, $this->repository->find('recipe'));
-        $this->assertInstanceOf(Module::class, $this->repository->get('recipe'));
+        $this->assertInstanceOf(Component::class, $this->repository->find('recipe'));
+        $this->assertInstanceOf(Component::class, $this->repository->get('recipe'));
     }
 
     /** @test */
-    public function it_find_or_fail_throws_exception_if_module_not_found()
+    public function it_find_or_fail_throws_exception_if_component_not_found()
     {
-        $this->setExpectedException(ModuleNotFoundException::class);
+        $this->setExpectedException(ComponentNotFoundException::class);
 
         $this->repository->findOrFail('something');
     }
 
     /** @test */
-    public function it_finds_the_module_asset_path()
+    public function it_finds_the_component_asset_path()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
         $assetPath = $this->repository->assetPath('recipe');
 
-        $this->assertEquals(public_path('modules/recipe'), $assetPath);
+        $this->assertEquals(public_path('components/recipe'), $assetPath);
     }
 
     /** @test */
@@ -99,11 +99,11 @@ class RepositoryTest extends BaseTestCase
     {
         $path = $this->repository->getUsedStoragePath();
 
-        $this->assertEquals(storage_path('app/modules/modules.used'), $path);
+        $this->assertEquals(storage_path('app/components/components.used'), $path);
     }
 
     /** @test */
-    public function it_sets_used_module()
+    public function it_sets_used_component()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
 
@@ -122,19 +122,19 @@ class RepositoryTest extends BaseTestCase
     /** @test */
     public function it_gets_the_assets_path()
     {
-        $this->assertEquals(public_path('modules'), $this->repository->getAssetsPath());
+        $this->assertEquals(public_path('components'), $this->repository->getAssetsPath());
     }
 
     /** @test */
-    public function it_gets_a_specific_module_asset()
+    public function it_gets_a_specific_component_asset()
     {
         $path = $this->repository->asset('recipe:test.js');
 
-        $this->assertEquals('//localhost/modules/recipe/test.js', $path);
+        $this->assertEquals('//localhost/components/recipe/test.js', $path);
     }
 
     /** @test */
-    public function it_can_detect_if_module_is_active()
+    public function it_can_detect_if_component_is_active()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
 
@@ -142,7 +142,7 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_can_detect_if_module_is_inactive()
+    public function it_can_detect_if_component_is_inactive()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
 
@@ -160,9 +160,9 @@ class RepositoryTest extends BaseTestCase
     /** @test */
     public function it_gets_the_configured_stubs_path_if_enabled()
     {
-        $this->app['config']->set('modules.stubs.enabled', true);
+        $this->app['config']->set('components.stubs.enabled', true);
 
-        $this->assertEquals(base_path('vendor/rad/laravel-modules/src/Commands/stubs'), $this->repository->getStubPath());
+        $this->assertEquals(base_path('vendor/rad/laravel-components/src/Commands/stubs'), $this->repository->getStubPath());
     }
 
     /** @test */
@@ -172,7 +172,7 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_can_disabled_a_module()
+    public function it_can_disabled_a_component()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
 
@@ -182,7 +182,7 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_can_enable_a_module()
+    public function it_can_enable_a_component()
     {
         $this->repository->addLocation(__DIR__ . '/stubs/Recipe');
 
@@ -192,12 +192,12 @@ class RepositoryTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_can_delete_a_module()
+    public function it_can_delete_a_component()
     {
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
 
         $this->repository->delete('Blog');
 
-        $this->assertFalse(is_dir(base_path('modules/Blog')));
+        $this->assertFalse(is_dir(base_path('components/Blog')));
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\Publishing;
+namespace Rad\Components\Publishing;
 
-use Rad\Modules\Migrations\Migrator;
+use Rad\Components\Migrations\Migrator;
 
 class MigrationPublisher extends AssetPublisher
 {
@@ -19,7 +19,7 @@ class MigrationPublisher extends AssetPublisher
     public function __construct(Migrator $migrator)
     {
         $this->migrator = $migrator;
-        parent::__construct($migrator->getModule());
+        parent::__construct($migrator->getComponent());
     }
 
     /**

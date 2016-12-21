@@ -1,28 +1,28 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
-class UpdateCommand extends ModuleCommand
+class UpdateCommand extends ComponentCommand
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:update';
+    protected $name = 'component:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update dependencies for the specified module or for all modules.';
+    protected $description = 'Update dependencies for the specified component or for all components.';
 
     /**
      * Execute the console command.
@@ -31,9 +31,9 @@ class UpdateCommand extends ModuleCommand
      */
     public function fire()
     {
-        $this->laravel['modules']->update($name = $this->getModuleName());
+        $this->laravel['components']->update($name = $this->getComponentName());
 
-        $this->info("Module [{$name}] updated successfully.");
+        $this->info("Component [{$name}] updated successfully.");
     }
 
     /**
@@ -44,7 +44,7 @@ class UpdateCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module will be updated.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be updated.'],
         ];
     }
 }

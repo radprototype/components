@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Recipe\Repositories;
+namespace Components\Recipe\Repositories;
 
-use Modules\Core\Repositories\BaseRepository;
+use Components\Core\Repositories\BaseRepository;
 
 interface RecipeRepository extends BaseRepository
 {

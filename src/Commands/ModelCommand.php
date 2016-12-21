@@ -1,16 +1,16 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
 use Illuminate\Support\Str;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class ModelCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The name of argument name.
@@ -24,14 +24,14 @@ class ModelCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-model';
+    protected $name = 'component:make-model';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate new model for the specified module.';
+    protected $description = 'Generate new model for the specified component.';
 
     /**
      * Get the console command arguments.
@@ -42,7 +42,7 @@ class ModelCommand extends Command
     {
         return [
             ['model', InputArgument::REQUIRED, 'The name of model will be created.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -63,17 +63,17 @@ class ModelCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/model.stub', [
             'NAME'             => $this->getModelName(),
             'FILLABLE'         => $this->getFillable(),
-            'NAMESPACE'        => $this->getClassNamespace($module),
+            'NAMESPACE'        => $this->getClassNamespace($component),
             'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $module->getLowerName(),
-            'MODULE'           => $this->getModuleName(),
-            'STUDLY_NAME'      => $module->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
+            'LOWER_NAME'       => $component->getLowerName(),
+            'MODULE'           => $this->getComponentName(),
+            'STUDLY_NAME'      => $component->getStudlyName(),
+            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
         ]))->render();
     }
 
@@ -82,9 +82,9 @@ class ModelCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $seederPath = $this->laravel['modules']->config('paths.generator.model');
+        $seederPath = $this->laravel['components']->config('paths.generator.model');
 
         return $path . $seederPath . '/' . $this->getModelName() . '.php';
     }
@@ -120,6 +120,6 @@ class ModelCommand extends Command
      */
     public function getDefaultNamespace()
     {
-        return $this->laravel['modules']->config('paths.generator.model');
+        return $this->laravel['components']->config('paths.generator.model');
     }
 }

@@ -1,27 +1,27 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Generators\ModuleGenerator;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Generators\ComponentGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class MakeCommand extends ModuleCommand
+class MakeCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:make';
+    protected $name = 'component:make';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate new module.';
+    protected $description = 'Generate new component.';
 
     /**
      * Execute the console command.
@@ -33,9 +33,9 @@ class MakeCommand extends ModuleCommand
         $names = $this->argument('name');
 
         foreach ($names as $name) {
-            with(new ModuleGenerator($name))
+            with(new ComponentGenerator($name))
                 ->setFilesystem($this->laravel['files'])
-                ->setModule($this->laravel['modules'])
+                ->setComponent($this->laravel['components'])
                 ->setConfig($this->laravel['config'])
                 ->setConsole($this)
                 ->setForce($this->option('force'))
@@ -52,15 +52,15 @@ class MakeCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::IS_ARRAY, 'The names of modules will be created.'],
+            ['name', InputArgument::IS_ARRAY, 'The names of components will be created.'],
         ];
     }
 
     protected function getOptions()
     {
         return [
-            ['plain', 'p', InputOption::VALUE_NONE, 'Generate a plain module (without some resources).'],
-            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when module already exist.'],
+            ['plain', 'p', InputOption::VALUE_NONE, 'Generate a plain component (without some resources).'],
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when component already exist.'],
         ];
     }
 }

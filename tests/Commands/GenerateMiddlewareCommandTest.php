@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class GenerateMiddlewareCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class GenerateMiddlewareCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_a_new_middleware_class()
     {
-        $this->artisan('module:make-middleware', ['name' => 'SomeMiddleware', 'module' => 'Blog']);
+        $this->artisan('component:make-middleware', ['name' => 'SomeMiddleware', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Http/Middleware/SomeMiddleware.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Http/Middleware/SomeMiddleware.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-middleware', ['name' => 'SomeMiddleware', 'module' => 'Blog']);
+        $this->artisan('component:make-middleware', ['name' => 'SomeMiddleware', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Middleware/SomeMiddleware.php');
+        $file = $this->finder->get($this->componentPath . '/Http/Middleware/SomeMiddleware.php');
 
         $this->assertTrue(str_contains($file, 'class SomeMiddleware'));
         $this->assertTrue(str_contains($file, 'public function handle(Request $request, Closure $next)'));

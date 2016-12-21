@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests;
+namespace Rad\Components\tests;
 
-use Rad\Modules\LaravelModulesServiceProvider;
+use Rad\Components\LaravelComponentsServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class BaseTestCase extends OrchestraTestCase
@@ -24,7 +24,7 @@ abstract class BaseTestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            LaravelModulesServiceProvider::class,
+            LaravelComponentsServiceProvider::class,
         ];
     }
 
@@ -41,10 +41,10 @@ abstract class BaseTestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix' => '',
         ));
-        $app['config']->set('modules.paths.modules', base_path('modules'));
-        $app['config']->set('modules.paths', [
-            'modules' => base_path('modules'),
-            'assets' => public_path('modules'),
+        $app['config']->set('components.paths.components', base_path('components'));
+        $app['config']->set('components.paths', [
+            'components' => base_path('components'),
+            'assets' => public_path('components'),
             'migration' => base_path('database/migrations'),
             'generator' => [
                 'assets' => 'Resources/assets',

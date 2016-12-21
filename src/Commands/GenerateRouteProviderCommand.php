@@ -1,29 +1,29 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateRouteProviderCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
-    protected $argumentName = 'module';
+    protected $argumentName = 'component';
     /**
      * The command name.
      *
      * @var string
      */
-    protected $name = 'module:route-provider';
+    protected $name = 'component:route-provider';
 
     /**
      * The command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new route service provider for the specified module.';
+    protected $description = 'Generate a new route service provider for the specified component.';
 
     /**
      * The command arguments.
@@ -33,7 +33,7 @@ class GenerateRouteProviderCommand extends Command
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -44,16 +44,16 @@ class GenerateRouteProviderCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/route-provider.stub', [
-            'NAMESPACE'        => $this->getClassNamespace($module),
+            'NAMESPACE'        => $this->getClassNamespace($component),
             'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $module->getLowerName(),
-            'MODULE'           => $this->getModuleName(),
+            'LOWER_NAME'       => $component->getLowerName(),
+            'MODULE'           => $this->getComponentName(),
             'NAME'             => $this->getFileName(),
-            'STUDLY_NAME'      => $module->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
+            'STUDLY_NAME'      => $component->getStudlyName(),
+            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
         ]))->render();
     }
 
@@ -64,9 +64,9 @@ class GenerateRouteProviderCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $generatorPath = $this->laravel['modules']->config('paths.generator.provider');
+        $generatorPath = $this->laravel['components']->config('paths.generator.provider');
 
         return $path . $generatorPath . '/' . $this->getFileName() . '.php';
     }

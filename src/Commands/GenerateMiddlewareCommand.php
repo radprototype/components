@@ -1,15 +1,15 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
 use Illuminate\Support\Str;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateMiddlewareCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The name of argument name.
@@ -23,14 +23,14 @@ class GenerateMiddlewareCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-middleware';
+    protected $name = 'component:make-middleware';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate new middleware class for the specified module.';
+    protected $description = 'Generate new middleware class for the specified component.';
 
     /**
      * Get the console command arguments.
@@ -41,7 +41,7 @@ class GenerateMiddlewareCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the command.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -50,16 +50,16 @@ class GenerateMiddlewareCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/middleware.stub', [
-            'NAMESPACE'        => $this->getClassNamespace($module),
+            'NAMESPACE'        => $this->getClassNamespace($component),
             'CLASS'            => $this->getClass(),
-            'LOWER_NAME'       => $module->getLowerName(),
-            'MODULE'           => $this->getModuleName(),
+            'LOWER_NAME'       => $component->getLowerName(),
+            'MODULE'           => $this->getComponentName(),
             'NAME'             => $this->getFileName(),
             'STUDLY_NAME'      => $this->getFileName(),
-            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
+            'MODULE_NAMESPACE' => $this->laravel['components']->config('namespace'),
         ]))->render();
     }
 
@@ -68,9 +68,9 @@ class GenerateMiddlewareCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $seederPath = $this->laravel['modules']->config('paths.generator.middleware');
+        $seederPath = $this->laravel['components']->config('paths.generator.middleware');
 
         return $path . $seederPath . '/' . $this->getFileName() . '.php';
     }

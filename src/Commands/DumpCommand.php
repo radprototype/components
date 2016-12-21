@@ -1,25 +1,25 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-class DumpCommand extends ModuleCommand
+class DumpCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:dump';
+    protected $name = 'component:dump';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Dump-autoload the specified module or for all module.';
+    protected $description = 'Dump-autoload the specified component or for all component.';
 
     /**
      * Execute the console command.
@@ -28,24 +28,24 @@ class DumpCommand extends ModuleCommand
      */
     public function fire()
     {
-        $this->info('Generating optimized autoload modules.');
+        $this->info('Generating optimized autoload components.');
 
-        if ($module = $this->argument('module')) {
-            $this->dump($module);
+        if ($component = $this->argument('component')) {
+            $this->dump($component);
         } else {
-            foreach ($this->laravel['modules']->all() as $module) {
-                $this->dump($module->getStudlyName());
+            foreach ($this->laravel['components']->all() as $component) {
+                $this->dump($component->getStudlyName());
             }
         }
     }
 
-    public function dump($module)
+    public function dump($component)
     {
-        $module = $this->laravel['modules']->findOrFail($module);
+        $component = $this->laravel['components']->findOrFail($component);
 
-        $this->line("<comment>Running for module</comment>: {$module}");
+        $this->line("<comment>Running for component</comment>: {$component}");
 
-        chdir($module->getPath());
+        chdir($component->getPath());
 
         passthru('composer dump -o -n -q');
     }
@@ -58,7 +58,7 @@ class DumpCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'Module name.'],
+            ['component', InputArgument::OPTIONAL, 'Component name.'],
         ];
     }
 }

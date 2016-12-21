@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Publishing;
+namespace Rad\Components\Publishing;
 
 class AssetPublisher extends Publisher
 {
@@ -18,7 +18,7 @@ class AssetPublisher extends Publisher
      */
     public function getDestinationPath()
     {
-        return $this->repository->assetPath($this->module->getLowerName());
+        return $this->repository->assetPath($this->component->getLowerName());
     }
 
     /**
@@ -28,7 +28,7 @@ class AssetPublisher extends Publisher
      */
     public function getSourcePath()
     {
-        return $this->getModule()->getExtraPath(
+        return $this->getComponent()->getExtraPath(
             $this->repository->config('paths.generator.assets')
         );
     }

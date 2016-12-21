@@ -1,19 +1,19 @@
 <?php
 
-namespace Rad\Modules\Process;
+namespace Rad\Components\Process;
 
 class Updater extends Runner
 {
     /**
-     * Update the dependencies for the specified module by given the module name.
+     * Update the dependencies for the specified component by given the component name.
      *
-     * @param string $module
+     * @param string $component
      */
-    public function update($module)
+    public function update($component)
     {
-        $module = $this->module->findOrFail($module);
+        $component = $this->component->findOrFail($component);
 
-        $packages = $module->getComposerAttr('require', []);
+        $packages = $component->getComposerAttr('require', []);
 
         chdir(base_path());
 

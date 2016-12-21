@@ -5,7 +5,7 @@ use Illuminate\Routing\Router;
 /** @var Router $router */
 $router->group(['prefix' =>'/recipe'], function (Router $router) {
         $router->bind('recipes', function ($id) {
-            return app('Modules\Recipe\Repositories\RecipeRepository')->find($id);
+            return app('Components\Recipe\Repositories\RecipeRepository')->find($id);
         });
         $router->resource('recipes', 'RecipeController', ['except' => ['show'], 'names' => [
             'index' => 'admin.recipe.recipe.index',

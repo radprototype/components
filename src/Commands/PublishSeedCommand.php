@@ -1,27 +1,27 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Migrations\Seeder;
-use Rad\Modules\Publishing\SeedPublisher;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Migrations\Seeder;
+use Rad\Components\Publishing\SeedPublisher;
 use Symfony\Component\Console\Input\InputArgument;
 
-class PublishSeedCommand extends ModuleCommand
+class PublishSeedCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:publish-seed';
+    protected $name = 'component:publish-seed';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = "Publish a module's seeds to the application";
+    protected $description = "Publish a component's seeds to the application";
 
     /**
      * Execute the console command.
@@ -30,28 +30,28 @@ class PublishSeedCommand extends ModuleCommand
      */
     public function fire()
     {
-        if ($name = $this->argument('module')) {
-            $module = $this->laravel['modules']->findOrFail($name);
+        if ($name = $this->argument('component')) {
+            $component = $this->laravel['components']->findOrFail($name);
 
-            $this->publish($module);
+            $this->publish($component);
 
             return;
         }
 
-        foreach ($this->laravel['modules']->enabled() as $module) {
-            $this->publish($module);
+        foreach ($this->laravel['components']->enabled() as $component) {
+            $this->publish($component);
         }
     }
 
     /**
-     * Publish migration for the specified module.
+     * Publish migration for the specified component.
      *
-     * @param \Rad\Modules\Module $module
+     * @param \Rad\Components\Component $component
      */
-    public function publish($module)
+    public function publish($component)
     {
-        with(new SeedPublisher(new Seeder($module)))
-            ->setRepository($this->laravel['modules'])
+        with(new SeedPublisher(new Seeder($component)))
+            ->setRepository($this->laravel['components'])
             ->setConsole($this)
             ->publish();
     }
@@ -64,7 +64,7 @@ class PublishSeedCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module being used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component being used.'],
         ];
     }
 }

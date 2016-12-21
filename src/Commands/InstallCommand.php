@@ -1,28 +1,28 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Json;
-use Rad\Modules\Process\Installer;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Json;
+use Rad\Components\Process\Installer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class InstallCommand extends ModuleCommand
+class InstallCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:install';
+    protected $name = 'component:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install the specified module by given package name (vendor/name).';
+    protected $description = 'Install the specified component by given package name (vendor/name).';
 
     /**
      * Create a new command instance.
@@ -54,33 +54,33 @@ class InstallCommand extends ModuleCommand
     }
 
     /**
-     * Install modules from modules.json file.
+     * Install components from components.json file.
      */
     protected function installFromFile()
     {
-        if (!file_exists($path = base_path('modules.json'))) {
-            $this->error("File 'modules.json' does not exist in your project root.");
+        if (!file_exists($path = base_path('components.json'))) {
+            $this->error("File 'components.json' does not exist in your project root.");
 
             return;
         }
 
-        $modules = Json::make($path);
+        $components = Json::make($path);
 
-        $dependencies = $modules->get('require', []);
+        $dependencies = $components->get('require', []);
 
-        foreach ($dependencies as $module) {
-            $module = collect($module);
+        foreach ($dependencies as $component) {
+            $component = collect($component);
 
             $this->install(
-                $module->get('name'),
-                $module->get('version'),
-                $module->get('type')
+                $component->get('name'),
+                $component->get('version'),
+                $component->get('type')
             );
         }
     }
 
     /**
-     * Install the specified module.
+     * Install the specified component.
      *
      * @param string $name
      * @param string $version
@@ -96,7 +96,7 @@ class InstallCommand extends ModuleCommand
             $tree ?: $this->option('tree')
         );
 
-        $installer->setRepository($this->laravel['modules']);
+        $installer->setRepository($this->laravel['components']);
 
         $installer->setConsole($this);
 
@@ -111,8 +111,8 @@ class InstallCommand extends ModuleCommand
         $installer->run();
 
         if (!$this->option('no-update')) {
-            $this->call('module:update', [
-                'module' => $installer->getModuleName(),
+            $this->call('component:update', [
+                'component' => $installer->getComponentName(),
             ]);
         }
     }
@@ -125,8 +125,8 @@ class InstallCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::OPTIONAL, 'The name of module will be installed.'],
-            ['version', InputArgument::OPTIONAL, 'The version of module will be installed.'],
+            ['name', InputArgument::OPTIONAL, 'The name of component will be installed.'],
+            ['version', InputArgument::OPTIONAL, 'The version of component will be installed.'],
         ];
     }
 
@@ -141,7 +141,7 @@ class InstallCommand extends ModuleCommand
             ['timeout', null, InputOption::VALUE_OPTIONAL, 'The process timeout.', null],
             ['path', null, InputOption::VALUE_OPTIONAL, 'The installation path.', null],
             ['type', null, InputOption::VALUE_OPTIONAL, 'The type of installation.', null],
-            ['tree', null, InputOption::VALUE_NONE, 'Install the module as a git subtree', null],
+            ['tree', null, InputOption::VALUE_NONE, 'Install the component as a git subtree', null],
             ['no-update', null, InputOption::VALUE_NONE, 'Disables the automatic update of the dependencies.', null],
         ];
     }

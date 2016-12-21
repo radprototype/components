@@ -1,26 +1,26 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class PublishConfigurationCommand extends ModuleCommand
+class PublishConfigurationCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:publish-config';
+    protected $name = 'component:publish-config';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Publish a module\'s config files to the application';
+    protected $description = 'Publish a component\'s config files to the application';
 
     /**
      * Execute the console command.
@@ -29,36 +29,36 @@ class PublishConfigurationCommand extends ModuleCommand
      */
     public function fire()
     {
-        if ($module = $this->argument('module')) {
-            $this->publishConfiguration($module);
+        if ($component = $this->argument('component')) {
+            $this->publishConfiguration($component);
 
             return;
         }
 
-        foreach ($this->laravel['modules']->enabled() as $module) {
-            $this->publishConfiguration($module->getName());
+        foreach ($this->laravel['components']->enabled() as $component) {
+            $this->publishConfiguration($component->getName());
         }
     }
 
     /**
-     * @param string $module
+     * @param string $component
      *
      * @return string
      */
-    private function getServiceProviderForModule($module)
+    private function getServiceProviderForComponent($component)
     {
-        $studlyName = studly_case($module);
+        $studlyName = studly_case($component);
 
-        return "Modules\\$studlyName\\Providers\\{$studlyName}ServiceProvider";
+        return "Components\\$studlyName\\Providers\\{$studlyName}ServiceProvider";
     }
 
     /**
-     * @param string $module
+     * @param string $component
      */
-    private function publishConfiguration($module)
+    private function publishConfiguration($component)
     {
         $this->call('vendor:publish', [
-            '--provider' => $this->getServiceProviderForModule($module),
+            '--provider' => $this->getServiceProviderForComponent($component),
             '--force'    => $this->option('force'),
             '--tag'      => ['config'],
         ]);
@@ -72,7 +72,7 @@ class PublishConfigurationCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module being used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component being used.'],
         ];
     }
 

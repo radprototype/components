@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class PublishAssetCommandTest extends BaseTestCase
 {
@@ -13,28 +13,28 @@ class PublishAssetCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
-        $this->finder->put($this->modulePath . '/Assets/script.js', 'assetfile');
+        $this->artisan('component:make', ['name' => ['Blog']]);
+        $this->finder->put($this->componentPath . '/Assets/script.js', 'assetfile');
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
-    public function it_published_module_assets()
+    public function it_published_component_assets()
     {
-        $this->artisan('module:publish', ['module' => 'Blog']);
+        $this->artisan('component:publish', ['component' => 'Blog']);
 
-        $this->assertTrue(is_file(public_path('modules/blog/script.js')));
+        $this->assertTrue(is_file(public_path('components/blog/script.js')));
     }
 }

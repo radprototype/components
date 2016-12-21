@@ -1,32 +1,32 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
 use Illuminate\Support\Str;
-use Rad\Modules\Support\Migrations\NameParser;
-use Rad\Modules\Support\Migrations\SchemaParser;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Migrations\NameParser;
+use Rad\Components\Support\Migrations\SchemaParser;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class MigrationCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:make-migration';
+    protected $name = 'component:make-migration';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new migration for the specified module.';
+    protected $description = 'Generate a new migration for the specified component.';
 
     /**
      * Get the console command arguments.
@@ -37,7 +37,7 @@ class MigrationCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The migration name will be created.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be created.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be created.'],
         ];
     }
 
@@ -111,9 +111,9 @@ class MigrationCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $generatorPath = $this->laravel['modules']->config('paths.generator.migration');
+        $generatorPath = $this->laravel['components']->config('paths.generator.migration');
 
         return $path . $generatorPath . '/' . $this->getFileName() . '.php';
     }

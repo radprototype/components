@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests;
+namespace Rad\Components\tests;
 
-use Rad\Modules\Json;
+use Rad\Components\Json;
 
 class JsonTest extends BaseTestCase
 {
@@ -14,14 +14,14 @@ class JsonTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-        $path = __DIR__ . '/stubs/module.json';
+        $path = __DIR__ . '/stubs/component.json';
         $this->json = new Json($path, $this->app['files']);
     }
 
     /** @test */
     public function it_gets_the_file_path()
     {
-        $path = __DIR__ . '/stubs/module.json';
+        $path = __DIR__ . '/stubs/component.json';
 
         $this->assertEquals($path, $this->json->getPath());
     }
@@ -31,9 +31,9 @@ class JsonTest extends BaseTestCase
     {
         $this->assertEquals('Order', $this->json->get('name'));
         $this->assertEquals('order', $this->json->get('alias'));
-        $this->assertEquals('My demo module', $this->json->get('description'));
+        $this->assertEquals('My demo component', $this->json->get('description'));
         $this->assertEquals('0.1', $this->json->get('version'));
-        $this->assertEquals(['my', 'stub', 'module'], $this->json->get('keywords'));
+        $this->assertEquals(['my', 'stub', 'component'], $this->json->get('keywords'));
         $this->assertEquals(1, $this->json->get('active'));
         $this->assertEquals(1, $this->json->get('order'));
     }
@@ -43,9 +43,9 @@ class JsonTest extends BaseTestCase
     {
         $this->assertEquals('Order', $this->json->name);
         $this->assertEquals('order', $this->json->alias);
-        $this->assertEquals('My demo module', $this->json->description);
+        $this->assertEquals('My demo component', $this->json->description);
         $this->assertEquals('0.1', $this->json->version);
-        $this->assertEquals(['my', 'stub', 'module'], $this->json->keywords);
+        $this->assertEquals(['my', 'stub', 'component'], $this->json->keywords);
         $this->assertEquals(1, $this->json->active);
         $this->assertEquals(1, $this->json->order);
     }
@@ -53,7 +53,7 @@ class JsonTest extends BaseTestCase
     /** @test */
     public function it_makes_json_class()
     {
-        $path = __DIR__ . '/stubs/module.json';
+        $path = __DIR__ . '/stubs/component.json';
         $json = Json::make($path, $this->app['files']);
 
         $this->assertInstanceOf(Json::class, $json);
@@ -62,7 +62,7 @@ class JsonTest extends BaseTestCase
     /** @test */
     public function it_sets_a_path()
     {
-        $path = __DIR__ . '/stubs/module.json';
+        $path = __DIR__ . '/stubs/component.json';
         $this->assertEquals($path, $this->json->getPath());
 
         $this->json->setPath('some/path.json');
@@ -75,19 +75,19 @@ class JsonTest extends BaseTestCase
         $expected = '{
     "name": "Order",
     "alias": "order",
-    "description": "My demo module",
+    "description": "My demo component",
     "version": "0.1",
     "keywords": [
         "my",
         "stub",
-        "module"
+        "component"
     ],
     "active": 1,
     "order": 1,
     "providers": [
-        "Modules\\\Order\\\Providers\\\OrderServiceProvider",
-        "Modules\\\Order\\\Providers\\\EventServiceProvider",
-        "Modules\\\Order\\\Providers\\\RouteServiceProvider"
+        "Components\\\Order\\\Providers\\\OrderServiceProvider",
+        "Components\\\Order\\\Providers\\\EventServiceProvider",
+        "Components\\\Order\\\Providers\\\RouteServiceProvider"
     ],
     "aliases": [],
     "files": []
@@ -109,19 +109,19 @@ class JsonTest extends BaseTestCase
         $expected = '{
     "name": "Order",
     "alias": "order",
-    "description": "My demo module",
+    "description": "My demo component",
     "version": "0.1",
     "keywords": [
         "my",
         "stub",
-        "module"
+        "component"
     ],
     "active": 1,
     "order": 1,
     "providers": [
-        "Modules\\\Order\\\Providers\\\OrderServiceProvider",
-        "Modules\\\Order\\\Providers\\\EventServiceProvider",
-        "Modules\\\Order\\\Providers\\\RouteServiceProvider"
+        "Components\\\Order\\\Providers\\\OrderServiceProvider",
+        "Components\\\Order\\\Providers\\\EventServiceProvider",
+        "Components\\\Order\\\Providers\\\RouteServiceProvider"
     ],
     "aliases":{},
     "files": [

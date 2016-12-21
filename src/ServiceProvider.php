@@ -1,11 +1,11 @@
 <?php
 
-namespace Rad\Modules;
+namespace Rad\Components;
 
-use Rad\Modules\Providers\BootstrapServiceProvider;
-use Rad\Modules\Providers\ConsoleServiceProvider;
-use Rad\Modules\Providers\ContractsServiceProvider;
-use Rad\Modules\Support\Stub;
+use Rad\Components\Providers\BootstrapServiceProvider;
+use Rad\Components\Providers\ConsoleServiceProvider;
+use Rad\Components\Providers\ContractsServiceProvider;
+use Rad\Components\Support\Stub;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -23,13 +23,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->registerNamespaces();
 
-        $this->registerModules();
+        $this->registerComponents();
     }
 
     /**
-     * Register all modules.
+     * Register all components.
      */
-    protected function registerModules()
+    protected function registerComponents()
     {
         $this->app->register(BootstrapServiceProvider::class);
     }
@@ -52,8 +52,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->booted(function ($app) {
             Stub::setBasePath(__DIR__ . '/Commands/stubs');
 
-            if ($app['modules']->config('stubs.enabled') === true) {
-                Stub::setBasePath($app['modules']->config('stubs.path'));
+            if ($app['components']->config('stubs.enabled') === true) {
+                Stub::setBasePath($app['components']->config('stubs.path'));
             }
         });
     }
@@ -64,8 +64,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function registerNamespaces()
     {
         $configPath = __DIR__ . '/../config/config.php';
-        $this->mergeConfigFrom($configPath, 'modules');
-        $this->publishes([$configPath => config_path('modules.php')], 'config');
+        $this->mergeConfigFrom($configPath, 'components');
+        $this->publishes([$configPath => config_path('components.php')], 'config');
     }
 
     /**
@@ -73,8 +73,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function registerServices()
     {
-        $this->app->singleton('modules', function ($app) {
-            $path = $app['config']->get('modules.paths.modules');
+        $this->app->singleton('components', function ($app) {
+            $path = $app['config']->get('components.paths.components');
 
             return new Repository($app, $path);
         });
@@ -87,7 +87,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return ['modules'];
+        return ['components'];
     }
 
     /**

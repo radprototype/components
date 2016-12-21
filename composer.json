@@ -1,10 +1,10 @@
 {
-  "name": "rad-laravel/modules",
-  "description": "Laravel Module Management",
+  "name": "rad-laravel/components",
+  "description": "Laravel Component Management",
   "keywords": [
     "laravel",
     "rad",
-    "module"
+    "component"
   ],
   "license": "MIT",
   "authors": [
@@ -28,12 +28,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Rad\\Modules\\": "src"
+      "Rad\\Components\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Rad\\Modules\\Tests\\": "tests"
+      "Rad\\Components\\Tests\\": "tests"
     }
   },
   "minimum-stability": "dev",

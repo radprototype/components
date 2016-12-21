@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Exceptions;
+namespace Rad\Components\Exceptions;
 
 class FileAlreadyExistException extends \Exception
 {

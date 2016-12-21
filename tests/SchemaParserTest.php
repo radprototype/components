@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests;
+namespace Rad\Components\tests;
 
-use Rad\Modules\Support\Migrations\SchemaParser;
+use Rad\Components\Support\Migrations\SchemaParser;
 
 class SchemaParserTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,32 +1,32 @@
 <?php
 
-namespace Rad\Modules\Process;
+namespace Rad\Components\Process;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Illuminate\Support\Str;
-use Rad\Modules\Repository;
+use Rad\Components\Repository;
 use Symfony\Component\Process\Process;
 
 class Installer
 {
     /**
-     * The module name.
+     * The component name.
      *
      * @var string
      */
     protected $name;
 
     /**
-     * The version of module being installed.
+     * The version of component being installed.
      *
      * @var string
      */
     protected $version;
 
     /**
-     * The module repository instance.
+     * The component repository instance.
      *
-     * @var \Rad\Modules\Repository
+     * @var \Rad\Components\Repository
      */
     protected $repository;
 
@@ -82,9 +82,9 @@ class Installer
     }
 
     /**
-     * Set the module repository instance.
+     * Set the component repository instance.
      *
-     * @param \Rad\Modules\Repository $repository
+     * @param \Rad\Components\Repository $repository
      *
      * @return $this
      */
@@ -98,7 +98,7 @@ class Installer
     /**
      * Set console command instance.
      *
-     * @param \Rad\Modules\Process\Command $console
+     * @param \Rad\Components\Process\Command $console
      *
      * @return $this
      */
@@ -180,7 +180,7 @@ class Installer
             return $this->path;
         }
 
-        return $this->repository->getModulePath($this->getModuleName());
+        return $this->repository->getComponentPath($this->getComponentName());
     }
 
     /**
@@ -220,11 +220,11 @@ class Installer
     }
 
     /**
-     * Get module name.
+     * Get component name.
      *
      * @return string
      */
-    public function getModuleName()
+    public function getComponentName()
     {
         $parts = explode('/', $this->name);
 
@@ -246,7 +246,7 @@ class Installer
     }
 
     /**
-     * Install the module via git.
+     * Install the component via git.
      *
      * @return \Symfony\Component\Process\Process
      */
@@ -263,7 +263,7 @@ class Installer
     }
 
     /**
-     * Install the module via git subtree.
+     * Install the component via git subtree.
      *
      * @return \Symfony\Component\Process\Process
      */
@@ -272,16 +272,16 @@ class Installer
         return new Process(sprintf(
             'cd %s && git remote add %s %s && git subtree add --prefix=%s --squash %s %s',
             base_path(),
-            $this->getModuleName(),
+            $this->getComponentName(),
             $this->getRepoUrl(),
             $this->getDestinationPath(),
-            $this->getModuleName(),
+            $this->getComponentName(),
             $this->getBranch()
         ));
     }
 
     /**
-     * Install the module via composer.
+     * Install the component via composer.
      *
      * @return \Symfony\Component\Process\Process
      */

@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Recipe\Http\Controllers\Admin;
+namespace Components\Recipe\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
-use Modules\Core\Http\Controllers\Admin\AdminBaseController;
-use Modules\Media\Repositories\FileRepository;
-use Modules\Recipe\Entities\Recipe;
-use Modules\Recipe\Repositories\RecipeRepository;
+use Components\Core\Http\Controllers\Admin\AdminBaseController;
+use Components\Media\Repositories\FileRepository;
+use Components\Recipe\Entities\Recipe;
+use Components\Recipe\Repositories\RecipeRepository;
 
 class RecipeController extends AdminBaseController
 {

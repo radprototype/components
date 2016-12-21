@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules;
+namespace Rad\Components;
 
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -24,7 +24,7 @@ class Collection extends \Illuminate\Support\Collection
     public function toArray()
     {
         return array_map(function ($value) {
-            if ($value instanceof Module) {
+            if ($value instanceof Component) {
                 return $value->json()->getAttributes();
             }
 

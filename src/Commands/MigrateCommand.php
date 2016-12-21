@@ -1,33 +1,33 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Migrations\Migrator;
-use Rad\Modules\Module;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Migrations\Migrator;
+use Rad\Components\Component;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class MigrateCommand extends ModuleCommand
+class MigrateCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:migrate';
+    protected $name = 'component:migrate';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Migrate the migrations from the specified module or from all modules.';
+    protected $description = 'Migrate the migrations from the specified component or from all components.';
 
     /**
-     * @var \Rad\Modules\Repository
+     * @var \Rad\Components\Repository
      */
-    protected $module;
+    protected $component;
 
     /**
      * Execute the console command.
@@ -36,32 +36,32 @@ class MigrateCommand extends ModuleCommand
      */
     public function fire()
     {
-        $this->module = $this->laravel['modules'];
+        $this->component = $this->laravel['components'];
 
-        $name = $this->argument('module');
+        $name = $this->argument('component');
 
         if ($name) {
-            $module = $this->module->findOrFail($name);
-            return $this->migrate($module);
+            $component = $this->component->findOrFail($name);
+            return $this->migrate($component);
         }
 
-        foreach ($this->module->getOrdered($this->option('direction')) as $module) {
-            $this->line('Running for module: <info>' . $module->getName() . '</info>');
+        foreach ($this->component->getOrdered($this->option('direction')) as $component) {
+            $this->line('Running for component: <info>' . $component->getName() . '</info>');
 
-            $this->migrate($module);
+            $this->migrate($component);
         }
     }
 
     /**
-     * Run the migration from the specified module.
+     * Run the migration from the specified component.
      *
-     * @param Module $module
+     * @param Component $component
      *
      * @return mixed
      */
-    protected function migrate(Module $module)
+    protected function migrate(Component $component)
     {
-        $path = str_replace(base_path(), '', (new Migrator($module))->getPath());
+        $path = str_replace(base_path(), '', (new Migrator($component))->getPath());
         $this->call('migrate', [
             '--path'     => $path,
             '--database' => $this->option('database'),
@@ -70,7 +70,7 @@ class MigrateCommand extends ModuleCommand
         ]);
 
         if ($this->option('seed')) {
-            $this->call('module:seed', ['module' => $module->getName()]);
+            $this->call('component:seed', ['component' => $component->getName()]);
         }
     }
 
@@ -82,7 +82,7 @@ class MigrateCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 

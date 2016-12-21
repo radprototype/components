@@ -1,26 +1,26 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
-class UseCommand extends ModuleCommand
+class UseCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:use';
+    protected $name = 'component:use';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Use the specified module.';
+    protected $description = 'Use the specified component.';
 
     /**
      * Execute the console command.
@@ -29,17 +29,17 @@ class UseCommand extends ModuleCommand
      */
     public function fire()
     {
-        $module = Str::studly($this->argument('module'));
+        $component = Str::studly($this->argument('component'));
 
-        if (!$this->laravel['modules']->has($module)) {
-            $this->error("Module [{$module}] does not exists.");
+        if (!$this->laravel['components']->has($component)) {
+            $this->error("Component [{$component}] does not exists.");
 
             return;
         }
 
-        $this->laravel['modules']->setUsed($module);
+        $this->laravel['components']->setUsed($component);
 
-        $this->info("Module [{$module}] used successfully.");
+        $this->info("Component [{$component}] used successfully.");
     }
 
     /**
@@ -50,7 +50,7 @@ class UseCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::REQUIRED, 'The name of module will be used.'],
+            ['component', InputArgument::REQUIRED, 'The name of component will be used.'],
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Support\Migrations;
+namespace Rad\Components\Support\Migrations;
 
 class NameParser
 {

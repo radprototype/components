@@ -1,10 +1,10 @@
 <?php
 
-namespace Rad\Modules\Providers;
+namespace Rad\Components\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Rad\Modules\Contracts\RepositoryInterface;
-use Rad\Modules\Repository;
+use Rad\Components\Contracts\RepositoryInterface;
+use Rad\Components\Repository;
 
 class ContractsServiceProvider extends ServiceProvider
 {

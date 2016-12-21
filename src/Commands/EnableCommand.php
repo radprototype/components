@@ -1,25 +1,25 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-class EnableCommand extends ModuleCommand
+class EnableCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:enable';
+    protected $name = 'component:enable';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Enable the specified module.';
+    protected $description = 'Enable the specified component.';
 
     /**
      * Execute the console command.
@@ -28,14 +28,14 @@ class EnableCommand extends ModuleCommand
      */
     public function fire()
     {
-        $module = $this->laravel['modules']->findOrFail($this->argument('module'));
+        $component = $this->laravel['components']->findOrFail($this->argument('component'));
 
-        if ($module->disabled()) {
-            $module->enable();
+        if ($component->disabled()) {
+            $component->enable();
 
-            $this->info("Module [{$module}] enabled successful.");
+            $this->info("Component [{$component}] enabled successful.");
         } else {
-            $this->comment("Module [{$module}] has already enabled.");
+            $this->comment("Component [{$component}] has already enabled.");
         }
     }
 
@@ -47,7 +47,7 @@ class EnableCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::REQUIRED, 'Module name.'],
+            ['component', InputArgument::REQUIRED, 'Component name.'],
         ];
     }
 }

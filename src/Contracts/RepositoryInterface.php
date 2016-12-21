@@ -1,34 +1,34 @@
 <?php
 
-namespace Rad\Modules\Contracts;
+namespace Rad\Components\Contracts;
 
 interface RepositoryInterface
 {
     /**
-     * Get all modules.
+     * Get all components.
      *
      * @return mixed
      */
     public function all();
 
     /**
-     * Get cached modules.
+     * Get cached components.
      *
      * @return array
      */
     public function getCached();
 
     /**
-     * Scan & get all available modules.
+     * Scan & get all available components.
      *
      * @return array
      */
     public function scan();
 
     /**
-     * Get modules as modules collection instance.
+     * Get components as components collection instance.
      *
-     * @return \Rad\Modules\Collection
+     * @return \Rad\Components\Collection
      */
     public function toCollection();
 
@@ -40,35 +40,35 @@ interface RepositoryInterface
     public function getScanPaths();
 
     /**
-     * Get list of enabled modules.
+     * Get list of enabled components.
      *
      * @return mixed
      */
     public function enabled();
 
     /**
-     * Get list of disabled modules.
+     * Get list of disabled components.
      *
      * @return mixed
      */
     public function disabled();
 
     /**
-     * Get count from all modules.
+     * Get count from all components.
      *
      * @return int
      */
     public function count();
 
     /**
-     * Get all ordered modules.
+     * Get all ordered components.
      *
      * @return mixed
      */
     public function getOrdered();
 
     /**
-     * Get modules by the given status.
+     * Get components by the given status.
      *
      * @param int $status
      *
@@ -77,7 +77,7 @@ interface RepositoryInterface
     public function getByStatus($status);
 
     /**
-     * Find a specific module.
+     * Find a specific component.
      *
      * @param $name
      *
@@ -86,7 +86,7 @@ interface RepositoryInterface
     public function find($name);
 
     /**
-     * Find a specific module. If there return that, otherwise throw exception.
+     * Find a specific component. If there return that, otherwise throw exception.
      *
      * @param $name
      *

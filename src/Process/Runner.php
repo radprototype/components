@@ -1,27 +1,27 @@
 <?php
 
-namespace Rad\Modules\Process;
+namespace Rad\Components\Process;
 
-use Rad\Modules\Contracts\RunableInterface;
-use Rad\Modules\Repository;
+use Rad\Components\Contracts\RunableInterface;
+use Rad\Components\Repository;
 
 class Runner implements RunableInterface
 {
     /**
-     * The module instance.
+     * The component instance.
      *
-     * @var \Rad\Modules\Repository
+     * @var \Rad\Components\Repository
      */
-    protected $module;
+    protected $component;
 
     /**
      * The constructor.
      *
-     * @param \Rad\Modules\Repository $module
+     * @param \Rad\Components\Repository $component
      */
-    public function __construct(Repository $module)
+    public function __construct(Repository $component)
     {
-        $this->module = $module;
+        $this->component = $component;
     }
 
 

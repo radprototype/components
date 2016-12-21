@@ -1,17 +1,17 @@
 <?php
 
-namespace Rad\Modules\Traits;
+namespace Rad\Components\Traits;
 
 trait MigrationLoaderTrait
 {
     /**
-     * Include all migrations files from the specified module.
+     * Include all migrations files from the specified component.
      *
-     * @param string $module
+     * @param string $component
      */
-    protected function loadMigrationFiles($module)
+    protected function loadMigrationFiles($component)
     {
-        $path = $this->laravel['modules']->getModulePath($module) . $this->getMigrationGeneratorPath();
+        $path = $this->laravel['components']->getComponentPath($component) . $this->getMigrationGeneratorPath();
 
         $files = $this->laravel['files']->glob($path . '/*_*.php');
 
@@ -27,6 +27,6 @@ trait MigrationLoaderTrait
      */
     protected function getMigrationGeneratorPath()
     {
-        return $this->laravel['modules']->config('paths.generator.migration');
+        return $this->laravel['components']->config('paths.generator.migration');
     }
 }

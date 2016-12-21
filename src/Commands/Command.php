@@ -1,9 +1,9 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Rad\Modules\Exceptions\FileAlreadyExistException;
-use Rad\Modules\Generators\FileGenerator;
+use Rad\Components\Exceptions\FileAlreadyExistException;
+use Rad\Components\Generators\FileGenerator;
 
 abstract class Command extends \Illuminate\Console\Command
 {
@@ -73,19 +73,19 @@ abstract class Command extends \Illuminate\Console\Command
     /**
      * Get class namespace.
      *
-     * @param \Rad\Modules\Module $module
+     * @param \Rad\Components\Component $component
      *
      * @return string
      */
-    public function getClassNamespace($module)
+    public function getClassNamespace($component)
     {
         $extra = str_replace($this->getClass(), '', $this->argument($this->argumentName));
 
         $extra = str_replace('/', '\\', $extra);
 
-        $namespace = $this->laravel['modules']->config('namespace');
+        $namespace = $this->laravel['components']->config('namespace');
 
-        $namespace .= '\\' . $module->getStudlyName();
+        $namespace .= '\\' . $component->getStudlyName();
 
         $namespace .= '\\' . $this->getDefaultNamespace();
 

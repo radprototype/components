@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class GenerateMakeCommandCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class GenerateMakeCommandCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_a_new_console_command_class()
     {
-        $this->artisan('module:make-command', ['name' => 'MyAwesomeCommand', 'module' => 'Blog']);
+        $this->artisan('component:make-command', ['name' => 'MyAwesomeCommand', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Console/MyAwesomeCommand.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Console/MyAwesomeCommand.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-command', ['name' => 'MyAwesomeCommand', 'module' => 'Blog']);
+        $this->artisan('component:make-command', ['name' => 'MyAwesomeCommand', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Console/MyAwesomeCommand.php');
+        $file = $this->finder->get($this->componentPath . '/Console/MyAwesomeCommand.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -50,9 +50,9 @@ class GenerateMakeCommandCommandTest extends BaseTestCase
     /** @test */
     public function it_uses_set_command_name_in_class()
     {
-        $this->artisan('module:make-command', ['name' => 'MyAwesomeCommand', 'module' => 'Blog', '--command' => 'my:awesome']);
+        $this->artisan('component:make-command', ['name' => 'MyAwesomeCommand', 'component' => 'Blog', '--command' => 'my:awesome']);
 
-        $file = $this->finder->get($this->modulePath . '/Console/MyAwesomeCommand.php');
+        $file = $this->finder->get($this->componentPath . '/Console/MyAwesomeCommand.php');
 
         $this->assertTrue(str_contains($file, "protected \$name = 'my:awesome';"));
     }
@@ -62,13 +62,13 @@ class GenerateMakeCommandCommandTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Console;
+namespace Components\Blog\Console;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class MyAwesomeCommand extends ModuleCommand
+class MyAwesomeCommand extends ComponentCommand
 {
     /**
      * The console command name.

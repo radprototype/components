@@ -1,28 +1,28 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateMailCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:make-mail';
+    protected $name = 'component:make-mail';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new Mailable Class for the specified module';
+    protected $description = 'Generate a new Mailable Class for the specified component';
 
     protected $argumentName = 'name';
 
@@ -35,7 +35,7 @@ class GenerateMailCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the mailable.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -46,10 +46,10 @@ class GenerateMailCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/mail.stub', [
-            'NAMESPACE' => $this->getClassNamespace($module),
+            'NAMESPACE' => $this->getClassNamespace($component),
             'CLASS'     => $this->getClass(),
         ]))->render();
     }
@@ -61,9 +61,9 @@ class GenerateMailCommand extends Command
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $mailPath = $this->laravel['modules']->config('paths.generator.emails', 'Emails');
+        $mailPath = $this->laravel['components']->config('paths.generator.emails', 'Emails');
 
         return $path . $mailPath . '/' . $this->getFileName() . '.php';
     }
@@ -81,6 +81,6 @@ class GenerateMailCommand extends Command
      */
     public function getDefaultNamespace()
     {
-        return $this->laravel['modules']->config('paths.generator.emails', 'Emails');
+        return $this->laravel['components']->config('paths.generator.emails', 'Emails');
     }
 }

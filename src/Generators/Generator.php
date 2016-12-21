@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules\Generators;
+namespace Rad\Components\Generators;
 
 abstract class Generator
 {

@@ -1,6 +1,6 @@
 # Changelog
 
-All Notable changes to `laravel-modules` will be documented in this file.
+All Notable changes to `laravel-components` will be documented in this file.
 
 ## Next -
 
@@ -16,12 +16,12 @@ All Notable changes to `laravel-modules` will be documented in this file.
 
 ### Added
 
-- `module:make-notification` command to generate a notification class
+- `component:make-notification` command to generate a notification class
 
 ### Changed
 
 - Usage of the `lists()` method on the laravel collection has been removed in favor of `pluck()`
-- Modules can now overwrite the default migration and seed paths in the `module.json`  file
+- Components can now overwrite the default migration and seed paths in the `component.json`  file
 
 ## 0.13.1 - 2016-09-09
 
@@ -33,7 +33,7 @@ All Notable changes to `laravel-modules` will be documented in this file.
 
 ### Changed
 
-- Ability to set default value on the config() method of a module.
+- Ability to set default value on the config() method of a component.
 - Mail: Setting default value to config. Using that as the namespace.
 - Using PSR2 for generated stubs
 
@@ -62,12 +62,12 @@ All Notable changes to `laravel-modules` will be documented in this file.
 
 ### Added
 
-- Adding `module:make-job` command to generate a job class
+- Adding `component:make-job` command to generate a job class
 - Adding support for Laravel 5.3
 
 ### Changed
 
-- Added force option to module:seed command
+- Added force option to component:seed command
 
 ## 0.10 - 2016-08-10
 
@@ -97,12 +97,12 @@ All Notable changes to `laravel-modules` will be documented in this file.
 
 ### Fixed
 
-- Module generation namespace now works with `StudlyCase` ([Issue #14](https://github.com/xuanhoa88/laravel-modules/issues/14))
-- No module namespace fix (#13)
+- Component generation namespace now works with `StudlyCase` ([Issue #14](https://github.com/xuanhoa88/laravel-components/issues/14))
+- No component namespace fix (#13)
 
 ### Changed
 
-- Using new service provider stub for module generation too
+- Using new service provider stub for component generation too
 
 ## 0.1 - 2016-06-27
 

@@ -1,14 +1,14 @@
 {
     "name": "Recipe",
     "alias": "recipe",
-    "description": "recipe module",
+    "description": "recipe component",
     "version": "0.1",
     "keywords": [],
     "active": 1,
     "order": 1,
     "providers": [
-        "Modules\\Recipe\\Providers\\RecipeServiceProvider",
-        "Modules\\Recipe\\Providers\\RouteServiceProvider"
+        "Components\\Recipe\\Providers\\RecipeServiceProvider",
+        "Components\\Recipe\\Providers\\RouteServiceProvider"
     ],
     "aliases": [],
     "files": []

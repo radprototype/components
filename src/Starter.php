@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules;
+namespace Rad\Components;
 
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;

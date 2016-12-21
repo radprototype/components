@@ -1,33 +1,33 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 use Illuminate\Support\Str;
 use RuntimeException;
-use Rad\Modules\Module;
-use Rad\Modules\Repository;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Component;
+use Rad\Components\Repository;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class SeedCommand extends ModuleCommand
+class SeedCommand extends ComponentCommand
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:seed';
+    protected $name = 'component:seed';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Run database seeder from the specified module or from all modules.';
+    protected $description = 'Run database seeder from the specified component or from all components.';
 
     /**
      * Execute the console command.
@@ -37,13 +37,13 @@ class SeedCommand extends ModuleCommand
     public function fire()
     {
         try {
-            if ($name = $this->argument('module')) {
+            if ($name = $this->argument('component')) {
                 $name = Str::studly($name);
-                $this->moduleSeed($this->getModuleByName($name));
+                $this->componentSeed($this->getComponentByName($name));
             } else {
-                $modules = $this->getModuleRepository()->getOrdered();
-                array_walk($modules, [$this, 'moduleSeed']);
-                $this->info('All modules seeded.');
+                $components = $this->getComponentRepository()->getOrdered();
+                array_walk($components, [$this, 'componentSeed']);
+                $this->info('All components seeded.');
             }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
@@ -55,13 +55,13 @@ class SeedCommand extends ModuleCommand
      *
      * @return Repository
      */
-    public function getModuleRepository()
+    public function getComponentRepository()
     {
-        $modules = $this->laravel['modules'];
-        if (!$modules instanceof Repository) {
-            throw new RuntimeException("Module repository not found!");
+        $components = $this->laravel['components'];
+        if (!$components instanceof Repository) {
+            throw new RuntimeException("Component repository not found!");
         }
-        return $modules;
+        return $components;
     }
 
     /**
@@ -69,28 +69,28 @@ class SeedCommand extends ModuleCommand
      *
      * @throws RuntimeException
      *
-     * @return Module
+     * @return Component
      */
-    public function getModuleByName($name)
+    public function getComponentByName($name)
     {
-        $modules = $this->getModuleRepository();
-        if ($modules->has($name) === false) {
-            throw new RuntimeException("Module [$name] does not exists.");
+        $components = $this->getComponentRepository();
+        if ($components->has($name) === false) {
+            throw new RuntimeException("Component [$name] does not exists.");
         }
 
-        return $modules->get($name);
+        return $components->get($name);
     }
 
     /**
-     * @param Module $module
+     * @param Component $component
      *
      * @return void
      */
-    public function moduleSeed(Module $module)
+    public function componentSeed(Component $component)
     {
         $seeders = [];
-        $name    = $module->getName();
-        $config  = $module->get('seed');
+        $name    = $component->getName();
+        $config  = $component->get('seed');
         if (is_array($config) && array_key_exists('seeds', $config)) {
             foreach ((array)$config['seeds'] as $class) {
                 if (@class_exists($class)) {
@@ -106,12 +106,12 @@ class SeedCommand extends ModuleCommand
 
         if (count($seeders) > 0) {
             array_walk($seeders, [$this, 'dbSeed']);
-            $this->info("Module [$name] seeded.");
+            $this->info("Component [$name] seeded.");
         }
     }
 
     /**
-     * Seed the specified module.
+     * Seed the specified component.
      *
      * @param string $className
      *
@@ -135,7 +135,7 @@ class SeedCommand extends ModuleCommand
     }
 
     /**
-     * Get master database seeder name for the specified module.
+     * Get master database seeder name for the specified component.
      *
      * @param string $name
      *
@@ -145,7 +145,7 @@ class SeedCommand extends ModuleCommand
     {
         $name = Str::studly($name);
 
-        $namespace = $this->laravel['modules']->config('namespace');
+        $namespace = $this->laravel['components']->config('namespace');
 
         return $namespace . '\\' . $name . '\Database\Seeders\\' . $name . 'DatabaseSeeder';
     }
@@ -158,7 +158,7 @@ class SeedCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 

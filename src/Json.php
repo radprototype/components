@@ -1,6 +1,6 @@
 <?php
 
-namespace Rad\Modules;
+namespace Rad\Components;
 
 use Illuminate\Filesystem\Filesystem;
 
@@ -118,11 +118,11 @@ class Json
      */
     public function getAttributes()
     {
-        if (config('modules.cache.enabled') === false) {
+        if (config('components.cache.enabled') === false) {
             return json_decode($this->getContents(), 1);
         }
 
-        return app('cache')->remember($this->getPath(), config('modules.cache.lifetime'), function () {
+        return app('cache')->remember($this->getPath(), config('components.cache.lifetime'), function () {
             return json_decode($this->getContents(), 1);
         });
     }

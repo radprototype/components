@@ -1,9 +1,9 @@
 <?php
 
-namespace Rad\Modules\Generators;
+namespace Rad\Components\Generators;
 
 use Illuminate\Filesystem\Filesystem;
-use Rad\Modules\Exceptions\FileAlreadyExistException;
+use Rad\Components\Exceptions\FileAlreadyExistException;
 
 class FileGenerator extends Generator
 {

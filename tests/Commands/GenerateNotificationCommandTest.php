@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\tests\BaseTestCase;
+use Rad\Components\tests\BaseTestCase;
 
 class GenerateNotificationCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class GenerateNotificationCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_the_mail_class()
     {
-        $this->artisan('module:make-notification', ['name' => 'WelcomeNotification', 'module' => 'Blog']);
+        $this->artisan('component:make-notification', ['name' => 'WelcomeNotification', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Notifications/WelcomeNotification.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Notifications/WelcomeNotification.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-notification', ['name' => 'WelcomeNotification', 'module' => 'Blog']);
+        $this->artisan('component:make-notification', ['name' => 'WelcomeNotification', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Notifications/WelcomeNotification.php');
+        $file = $this->finder->get($this->componentPath . '/Notifications/WelcomeNotification.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -52,7 +52,7 @@ class GenerateNotificationCommandTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Notifications;
+namespace Components\Blog\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;

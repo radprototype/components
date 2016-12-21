@@ -1,10 +1,10 @@
 <?php
 
-namespace Rad\Modules\Facades;
+namespace Rad\Components\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Module extends Facade
+class Component extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Module extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'modules';
+        return 'components';
     }
 }

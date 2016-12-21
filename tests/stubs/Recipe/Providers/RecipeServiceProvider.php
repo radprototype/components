@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Recipe\Providers;
+namespace Components\Recipe\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -36,15 +36,15 @@ class RecipeServiceProvider extends ServiceProvider
     private function registerBindings()
     {
         $this->app->bind(
-            'Modules\Recipe\Repositories\RecipeRepository',
+            'Components\Recipe\Repositories\RecipeRepository',
             function () {
-                $repository = new \Modules\Recipe\Repositories\Eloquent\EloquentRecipeRepository(new \Modules\Recipe\Entities\Recipe());
+                $repository = new \Components\Recipe\Repositories\Eloquent\EloquentRecipeRepository(new \Components\Recipe\Entities\Recipe());
 
                 if (! config('app.cache')) {
                     return $repository;
                 }
 
-                return new \Modules\Recipe\Repositories\Cache\CacheRecipeDecorator($repository);
+                return new \Components\Recipe\Repositories\Cache\CacheRecipeDecorator($repository);
             }
         );
 // add bindings

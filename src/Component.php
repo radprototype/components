@@ -1,13 +1,13 @@
 <?php
 
-namespace Rad\Modules;
+namespace Rad\Components;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\ServiceProvider as ModuleServiceProvider;
+use Illuminate\Support\ServiceProvider as ComponentServiceProvider;
 use Illuminate\Support\Str;
 
-class Module extends ModuleServiceProvider
+class Component extends ComponentServiceProvider
 {
     /**
      * The laravel application instance.
@@ -17,14 +17,14 @@ class Module extends ModuleServiceProvider
     protected $app;
 
     /**
-     * The module name.
+     * The component name.
      *
      * @var
      */
     protected $name;
 
     /**
-     * The module path,.
+     * The component path,.
      *
      * @var string
      */
@@ -143,7 +143,7 @@ class Module extends ModuleServiceProvider
      */
     public function boot()
     {
-        if (config('modules.register.translations', true) === true) {
+        if (config('components.register.translations', true) === true) {
             $this->registerTranslation();
         }
 
@@ -151,7 +151,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Register module's translation.
+     * Register component's translation.
      *
      * @return void
      */
@@ -174,7 +174,7 @@ class Module extends ModuleServiceProvider
     public function json($file = null)
     {
         if (is_null($file)) {
-            $file = 'module.json';
+            $file = 'component.json';
         }
 
         return new Json($this->getPath() . '/' . $file, $this->app['files']);
@@ -207,7 +207,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Register the module.
+     * Register the component.
      */
     public function register()
     {
@@ -221,17 +221,17 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Register the module event.
+     * Register the component event.
      *
      * @param string $event
      */
     protected function fireEvent($event)
     {
-        $this->app['events']->fire(sprintf('modules.%s.' . $event, $this->getLowerName()), [$this]);
+        $this->app['events']->fire(sprintf('components.%s.' . $event, $this->getLowerName()), [$this]);
     }
 
     /**
-     * Register the aliases from this module.
+     * Register the aliases from this component.
      */
     protected function registerAliases()
     {
@@ -242,7 +242,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Register the service providers from this module.
+     * Register the service providers from this component.
      */
     protected function registerProviders()
     {
@@ -252,7 +252,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Register the files from this module.
+     * Register the files from this component.
      */
     protected function registerFiles()
     {
@@ -272,7 +272,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Determine whether the given status same with the current module status.
+     * Determine whether the given status same with the current component status.
      *
      * @param $status
      *
@@ -284,7 +284,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Determine whether the current module activated.
+     * Determine whether the current component activated.
      *
      * @return bool
      */
@@ -304,7 +304,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Determine whether the current module not activated.
+     * Determine whether the current component not activated.
      *
      * @return bool
      */
@@ -324,7 +324,7 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Set active state for current module.
+     * Set active state for current component.
      *
      * @param $active
      *
@@ -336,33 +336,33 @@ class Module extends ModuleServiceProvider
     }
 
     /**
-     * Disable the current module.
+     * Disable the current component.
      *
      * @return bool
      */
     public function disable()
     {
-        $this->app['events']->fire('module.disabling', [$this]);
+        $this->app['events']->fire('component.disabling', [$this]);
 
         $this->setActive(0);
 
-        $this->app['events']->fire('module.disabled', [$this]);
+        $this->app['events']->fire('component.disabled', [$this]);
     }
 
     /**
-     * Enable the current module.
+     * Enable the current component.
      */
     public function enable()
     {
-        $this->app['events']->fire('module.enabling', [$this]);
+        $this->app['events']->fire('component.enabling', [$this]);
 
         $this->setActive(1);
 
-        $this->app['events']->fire('module.enabled', [$this]);
+        $this->app['events']->fire('component.enabled', [$this]);
     }
 
     /**
-     * Delete the current module.
+     * Delete the current component.
      *
      * @return bool
      */

@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Recipe\Entities;
+namespace Components\Recipe\Entities;
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Media\Support\Traits\MediaRelation;
+use Components\Media\Support\Traits\MediaRelation;
 
 class Recipe extends Model
 {

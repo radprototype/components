@@ -1,14 +1,14 @@
 <?php
 
-namespace Rad\Modules;
+namespace Rad\Components;
 
 use Countable;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
-use Rad\Modules\Contracts\RepositoryInterface;
-use Rad\Modules\Exceptions\ModuleNotFoundException;
-use Rad\Modules\Process\Installer;
-use Rad\Modules\Process\Updater;
+use Rad\Components\Contracts\RepositoryInterface;
+use Rad\Components\Exceptions\ComponentNotFoundException;
+use Rad\Components\Process\Installer;
+use Rad\Components\Process\Updater;
 
 class Repository implements RepositoryInterface, Countable
 {
@@ -20,7 +20,7 @@ class Repository implements RepositoryInterface, Countable
     protected $app;
 
     /**
-     * The module path.
+     * The component path.
      *
      * @var string|null
      */
@@ -51,7 +51,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Add other module location.
+     * Add other component location.
      *
      * @param string $path
      *
@@ -87,7 +87,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get scanned modules paths.
+     * Get scanned components paths.
      *
      * @return array
      */
@@ -105,7 +105,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get & scan all modules.
+     * Get & scan all components.
      *
      * @return array
      */
@@ -113,25 +113,25 @@ class Repository implements RepositoryInterface, Countable
     {
         $paths = $this->getScanPaths();
 
-        $modules = [];
+        $components = [];
 
         foreach ($paths as $key => $path) {
-            $manifests = $this->app['files']->glob("{$path}/module.json");
+            $manifests = $this->app['files']->glob("{$path}/component.json");
 
             is_array($manifests) || $manifests = [];
 
             foreach ($manifests as $manifest) {
                 $name = Json::make($manifest)->get('name');
 
-                $modules[$name] = new Module($this->app, $name, dirname($manifest));
+                $components[$name] = new Component($this->app, $name, dirname($manifest));
             }
         }
 
-        return $modules;
+        return $components;
     }
 
     /**
-     * Get all modules.
+     * Get all components.
      *
      * @return array
      */
@@ -145,7 +145,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Format the cached data as array of modules.
+     * Format the cached data as array of components.
      *
      * @param array $cached
      *
@@ -153,19 +153,19 @@ class Repository implements RepositoryInterface, Countable
      */
     protected function formatCached($cached)
     {
-        $modules = [];
+        $components = [];
 
-        foreach ($cached as $name => $module) {
-            $path = $this->config('paths.modules') . '/' . $name;
+        foreach ($cached as $name => $component) {
+            $path = $this->config('paths.components') . '/' . $name;
 
-            $modules[$name] = new Module($this->app, $name, $path);
+            $components[$name] = new Component($this->app, $name, $path);
         }
 
-        return $modules;
+        return $components;
     }
 
     /**
-     * Get cached modules.
+     * Get cached components.
      *
      * @return array
      */
@@ -177,7 +177,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get all modules as collection instance.
+     * Get all components as collection instance.
      *
      * @return Collection
      */
@@ -187,7 +187,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get modules by status.
+     * Get components by status.
      *
      * @param $status
      *
@@ -195,19 +195,19 @@ class Repository implements RepositoryInterface, Countable
      */
     public function getByStatus($status)
     {
-        $modules = [];
+        $components = [];
 
-        foreach ($this->all() as $name => $module) {
-            if ($module->isStatus($status)) {
-                $modules[$name] = $module;
+        foreach ($this->all() as $name => $component) {
+            if ($component->isStatus($status)) {
+                $components[$name] = $component;
             }
         }
 
-        return $modules;
+        return $components;
     }
 
     /**
-     * Determine whether the given module exist.
+     * Determine whether the given component exist.
      *
      * @param $name
      *
@@ -219,7 +219,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get list of enabled modules.
+     * Get list of enabled components.
      *
      * @return array
      */
@@ -229,7 +229,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get list of disabled modules.
+     * Get list of disabled components.
      *
      * @return array
      */
@@ -239,7 +239,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get count from all modules.
+     * Get count from all components.
      *
      * @return int
      */
@@ -249,7 +249,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get all ordered modules.
+     * Get all ordered components.
      *
      * @param string $direction
      *
@@ -257,9 +257,9 @@ class Repository implements RepositoryInterface, Countable
      */
     public function getOrdered($direction = 'asc')
     {
-        $modules = $this->enabled();
+        $components = $this->enabled();
 
-        uasort($modules, function (Module $a, Module $b) use ($direction) {
+        uasort($components, function (Component $a, Component $b) use ($direction) {
             if ($a->order == $b->order) {
                 return 0;
             }
@@ -271,41 +271,41 @@ class Repository implements RepositoryInterface, Countable
             return $a->order > $b->order ? 1 : -1;
         });
 
-        return $modules;
+        return $components;
     }
 
     /**
-     * Get a module path.
+     * Get a component path.
      *
      * @return string
      */
     public function getPath()
     {
-        return $this->path ?: $this->config('paths.modules');
+        return $this->path ?: $this->config('paths.components');
     }
 
     /**
-     * Register the modules.
+     * Register the components.
      */
     public function register()
     {
-        foreach ($this->getOrdered() as $module) {
-            $module->register();
+        foreach ($this->getOrdered() as $component) {
+            $component->register();
         }
     }
 
     /**
-     * Boot the modules.
+     * Boot the components.
      */
     public function boot()
     {
-        foreach ($this->getOrdered() as $module) {
-            $module->boot();
+        foreach ($this->getOrdered() as $component) {
+            $component->boot();
         }
     }
 
     /**
-     * Find a specific module.
+     * Find a specific component.
      *
      * @param $name
      *
@@ -313,9 +313,9 @@ class Repository implements RepositoryInterface, Countable
      */
     public function find($name)
     {
-        foreach ($this->all() as $module) {
-            if ($module->getLowerName() === strtolower($name)) {
-                return $module;
+        foreach ($this->all() as $component) {
+            if ($component->getLowerName() === strtolower($name)) {
+                return $component;
             }
         }
 
@@ -335,27 +335,27 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Find a specific module, if there return that, otherwise throw exception.
+     * Find a specific component, if there return that, otherwise throw exception.
      *
      * @param $name
      *
-     * @return Module
+     * @return Component
      *
-     * @throws ModuleNotFoundException
+     * @throws ComponentNotFoundException
      */
     public function findOrFail($name)
     {
-        $module = $this->find($name);
+        $component = $this->find($name);
 
-        if ($module !== null) {
-            return $module;
+        if ($component !== null) {
+            return $component;
         }
 
-        throw new ModuleNotFoundException("Module [{$name}] does not exist!");
+        throw new ComponentNotFoundException("Component [{$name}] does not exist!");
     }
 
     /**
-     * Get all modules as laravel collection instance.
+     * Get all components as laravel collection instance.
      *
      * @return Collection
      */
@@ -365,31 +365,31 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get module path for a specific module.
+     * Get component path for a specific component.
      *
-     * @param $module
+     * @param $component
      *
      * @return string
      */
-    public function getModulePath($module)
+    public function getComponentPath($component)
     {
         try {
-            return $this->findOrFail($module)->getPath() . '/';
-        } catch (ModuleNotFoundException $e) {
-            return $this->getPath() . '/' . Str::studly($module) . '/';
+            return $this->findOrFail($component)->getPath() . '/';
+        } catch (ComponentNotFoundException $e) {
+            return $this->getPath() . '/' . Str::studly($component) . '/';
         }
     }
 
     /**
-     * Get asset path for a specific module.
+     * Get asset path for a specific component.
      *
-     * @param $module
+     * @param $component
      *
      * @return string
      */
-    public function assetPath($module)
+    public function assetPath($component)
     {
-        return $this->config('paths.assets') . '/' . $module;
+        return $this->config('paths.assets') . '/' . $component;
     }
 
     /**
@@ -403,39 +403,39 @@ class Repository implements RepositoryInterface, Countable
      */
     public function config($key, $default = null)
     {
-        return $this->app['config']->get('modules.' . $key, $default);
+        return $this->app['config']->get('components.' . $key, $default);
     }
 
     /**
-     * Get storage path for module used.
+     * Get storage path for component used.
      *
      * @return string
      */
     public function getUsedStoragePath()
     {
-        if (!$this->app['files']->exists($path = storage_path('app/modules'))) {
+        if (!$this->app['files']->exists($path = storage_path('app/components'))) {
             $this->app['files']->makeDirectory($path, 0777, true);
         }
 
-        return $path . '/modules.used';
+        return $path . '/components.used';
     }
 
     /**
-     * Set module used for cli session.
+     * Set component used for cli session.
      *
      * @param $name
      *
-     * @throws ModuleNotFoundException
+     * @throws ComponentNotFoundException
      */
     public function setUsed($name)
     {
-        $module = $this->findOrFail($name);
+        $component = $this->findOrFail($name);
 
-        $this->app['files']->put($this->getUsedStoragePath(), $module);
+        $this->app['files']->put($this->getUsedStoragePath(), $component);
     }
 
     /**
-     * Get module used for cli session.
+     * Get component used for cli session.
      *
      * @return string
      */
@@ -465,7 +465,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get module assets path.
+     * Get component assets path.
      *
      * @return string
      */
@@ -475,7 +475,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Get asset url from a specific module.
+     * Get asset url from a specific component.
      *
      * @param string $asset
      *
@@ -493,7 +493,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Determine whether the given module is activated.
+     * Determine whether the given component is activated.
      *
      * @param string $name
      *
@@ -505,7 +505,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Determine whether the given module is not activated.
+     * Determine whether the given component is not activated.
      *
      * @param string $name
      *
@@ -517,7 +517,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Enabling a specific module.
+     * Enabling a specific component.
      *
      * @param string $name
      *
@@ -529,7 +529,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Disabling a specific module.
+     * Disabling a specific component.
      *
      * @param string $name
      *
@@ -541,7 +541,7 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Delete a specific module.
+     * Delete a specific component.
      *
      * @param string $name
      *
@@ -553,17 +553,17 @@ class Repository implements RepositoryInterface, Countable
     }
 
     /**
-     * Update dependencies for the specified module.
+     * Update dependencies for the specified component.
      *
-     * @param string $module
+     * @param string $component
      */
-    public function update($module)
+    public function update($component)
     {
-        with(new Updater($this))->update($module);
+        with(new Updater($this))->update($component);
     }
 
     /**
-     * Install the specified module.
+     * Install the specified component.
      *
      * @param string $name
      * @param string $version

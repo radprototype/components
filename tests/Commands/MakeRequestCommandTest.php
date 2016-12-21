@@ -1,8 +1,8 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Tests\BaseTestCase;
 
 class MakeRequestCommandTest extends BaseTestCase
 {
@@ -13,36 +13,36 @@ class MakeRequestCommandTest extends BaseTestCase
     /**
      * @var string
      */
-    private $modulePath;
+    private $componentPath;
 
     public function setUp()
     {
         parent::setUp();
-        $this->modulePath = base_path('modules/Blog');
+        $this->componentPath = base_path('components/Blog');
         $this->finder = $this->app['files'];
-        $this->artisan('module:make', ['name' => ['Blog']]);
+        $this->artisan('component:make', ['name' => ['Blog']]);
     }
 
     public function tearDown()
     {
-        $this->finder->deleteDirectory($this->modulePath);
+        $this->finder->deleteDirectory($this->componentPath);
         parent::tearDown();
     }
 
     /** @test */
     public function it_generates_a_new_form_request_class()
     {
-        $this->artisan('module:make-request', ['name' => 'CreateBlogPostRequest', 'module' => 'Blog']);
+        $this->artisan('component:make-request', ['name' => 'CreateBlogPostRequest', 'component' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Http/Requests/CreateBlogPostRequest.php'));
+        $this->assertTrue(is_file($this->componentPath . '/Http/Requests/CreateBlogPostRequest.php'));
     }
 
     /** @test */
     public function it_generated_correct_file_with_content()
     {
-        $this->artisan('module:make-request', ['name' => 'CreateBlogPostRequest', 'module' => 'Blog']);
+        $this->artisan('component:make-request', ['name' => 'CreateBlogPostRequest', 'component' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Requests/CreateBlogPostRequest.php');
+        $file = $this->finder->get($this->componentPath . '/Http/Requests/CreateBlogPostRequest.php');
 
         $this->assertEquals($this->expectedContent(), $file);
     }
@@ -52,7 +52,7 @@ class MakeRequestCommandTest extends BaseTestCase
         return <<<TEXT
 <?php
 
-namespace Modules\Blog\Http\Requests;
+namespace Components\Blog\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

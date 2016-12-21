@@ -1,41 +1,41 @@
 <?php
 
-namespace Rad\Modules\Providers;
+namespace Rad\Components\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Rad\Modules\Commands\MakeCommandCommand;
-use Rad\Modules\Commands\MakeControllerCommand;
-use Rad\Modules\Commands\DisableCommand;
-use Rad\Modules\Commands\DumpCommand;
-use Rad\Modules\Commands\EnableCommand;
-use Rad\Modules\Commands\GenerateEventCommand;
-use Rad\Modules\Commands\GenerateJobCommand;
-use Rad\Modules\Commands\GenerateListenerCommand;
-use Rad\Modules\Commands\GenerateMailCommand;
-use Rad\Modules\Commands\GenerateMiddlewareCommand;
-use Rad\Modules\Commands\GenerateNotificationCommand;
-use Rad\Modules\Commands\GenerateProviderCommand;
-use Rad\Modules\Commands\GenerateRouteProviderCommand;
-use Rad\Modules\Commands\InstallCommand;
-use Rad\Modules\Commands\ListCommand;
-use Rad\Modules\Commands\MakeCommand;
-use Rad\Modules\Commands\MakeRequestCommand;
-use Rad\Modules\Commands\MigrateCommand;
-use Rad\Modules\Commands\MigrateRefreshCommand;
-use Rad\Modules\Commands\MigrateResetCommand;
-use Rad\Modules\Commands\MigrateRollbackCommand;
-use Rad\Modules\Commands\MigrationCommand;
-use Rad\Modules\Commands\ModelCommand;
-use Rad\Modules\Commands\PublishAssetCommand;
-use Rad\Modules\Commands\PublishConfigurationCommand;
-use Rad\Modules\Commands\PublishMigrationCommand;
-use Rad\Modules\Commands\PublishTranslationCommand;
-use Rad\Modules\Commands\SeedCommand;
-use Rad\Modules\Commands\SeedMakeCommand;
-use Rad\Modules\Commands\SetupCommand;
-use Rad\Modules\Commands\UpdateCommand;
-use Rad\Modules\Commands\UseCommand;
-use Rad\Modules\Commands\PublishSeedCommand;
+use Rad\Components\Commands\MakeCommandCommand;
+use Rad\Components\Commands\MakeControllerCommand;
+use Rad\Components\Commands\DisableCommand;
+use Rad\Components\Commands\DumpCommand;
+use Rad\Components\Commands\EnableCommand;
+use Rad\Components\Commands\GenerateEventCommand;
+use Rad\Components\Commands\GenerateJobCommand;
+use Rad\Components\Commands\GenerateListenerCommand;
+use Rad\Components\Commands\GenerateMailCommand;
+use Rad\Components\Commands\GenerateMiddlewareCommand;
+use Rad\Components\Commands\GenerateNotificationCommand;
+use Rad\Components\Commands\GenerateProviderCommand;
+use Rad\Components\Commands\GenerateRouteProviderCommand;
+use Rad\Components\Commands\InstallCommand;
+use Rad\Components\Commands\ListCommand;
+use Rad\Components\Commands\MakeCommand;
+use Rad\Components\Commands\MakeRequestCommand;
+use Rad\Components\Commands\MigrateCommand;
+use Rad\Components\Commands\MigrateRefreshCommand;
+use Rad\Components\Commands\MigrateResetCommand;
+use Rad\Components\Commands\MigrateRollbackCommand;
+use Rad\Components\Commands\MigrationCommand;
+use Rad\Components\Commands\ModelCommand;
+use Rad\Components\Commands\PublishAssetCommand;
+use Rad\Components\Commands\PublishConfigurationCommand;
+use Rad\Components\Commands\PublishMigrationCommand;
+use Rad\Components\Commands\PublishTranslationCommand;
+use Rad\Components\Commands\SeedCommand;
+use Rad\Components\Commands\SeedMakeCommand;
+use Rad\Components\Commands\SetupCommand;
+use Rad\Components\Commands\UpdateCommand;
+use Rad\Components\Commands\UseCommand;
+use Rad\Components\Commands\PublishSeedCommand;
 
 class ConsoleServiceProvider extends ServiceProvider
 {

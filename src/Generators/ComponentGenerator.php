@@ -1,18 +1,18 @@
 <?php
 
-namespace Rad\Modules\Generators;
+namespace Rad\Components\Generators;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command as Console;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Rad\Modules\Repository;
-use Rad\Modules\Support\Stub;
+use Rad\Components\Repository;
+use Rad\Components\Support\Stub;
 
-class ModuleGenerator extends Generator
+class ComponentGenerator extends Generator
 {
     /**
-     * The module name will created.
+     * The component name will created.
      *
      * @var string
      */
@@ -40,11 +40,11 @@ class ModuleGenerator extends Generator
     protected $console;
 
     /**
-     * The pingpong module instance.
+     * The pingpong component instance.
      *
-     * @var Module
+     * @var Component
      */
-    protected $module;
+    protected $component;
 
     /**
      * Force status.
@@ -54,7 +54,7 @@ class ModuleGenerator extends Generator
     protected $force = false;
 
     /**
-     * Generate a plain module.
+     * Generate a plain component.
      *
      * @var bool
      */
@@ -64,14 +64,14 @@ class ModuleGenerator extends Generator
      * The constructor.
      *
      * @param            $name
-     * @param Repository $module
+     * @param Repository $component
      * @param Config     $config
      * @param Filesystem $filesystem
      * @param Console    $console
      */
     public function __construct(
         $name,
-        Repository $module = null,
+        Repository $component = null,
         Config $config = null,
         Filesystem $filesystem = null,
         Console $console = null
@@ -80,7 +80,7 @@ class ModuleGenerator extends Generator
         $this->config     = $config;
         $this->filesystem = $filesystem;
         $this->console    = $console;
-        $this->module     = $module;
+        $this->component     = $component;
     }
 
     /**
@@ -98,7 +98,7 @@ class ModuleGenerator extends Generator
     }
 
     /**
-     * Get the name of module will created. By default in studly case.
+     * Get the name of component will created. By default in studly case.
      *
      * @return string
      */
@@ -180,25 +180,25 @@ class ModuleGenerator extends Generator
     }
 
     /**
-     * Get the pingpong module instance.
+     * Get the pingpong component instance.
      *
-     * @return Module
+     * @return Component
      */
-    public function getModule()
+    public function getComponent()
     {
-        return $this->module;
+        return $this->component;
     }
 
     /**
-     * Set the pingpong module instance.
+     * Set the pingpong component instance.
      *
-     * @param mixed $module
+     * @param mixed $component
      *
      * @return $this
      */
-    public function setModule($module)
+    public function setComponent($component)
     {
-        $this->module = $module;
+        $this->component = $component;
 
         return $this;
     }
@@ -210,7 +210,7 @@ class ModuleGenerator extends Generator
      */
     public function getFolders()
     {
-        return array_values($this->module->config('paths.generator'));
+        return array_values($this->component->config('paths.generator'));
     }
 
     /**
@@ -220,7 +220,7 @@ class ModuleGenerator extends Generator
      */
     public function getFiles()
     {
-        return $this->module->config('stubs.files');
+        return $this->component->config('stubs.files');
     }
 
     /**
@@ -238,17 +238,17 @@ class ModuleGenerator extends Generator
     }
 
     /**
-     * Generate the module.
+     * Generate the component.
      */
     public function generate()
     {
         $name = $this->getName();
 
-        if ($this->module->has($name)) {
+        if ($this->component->has($name)) {
             if ($this->force) {
-                $this->module->delete($name);
+                $this->component->delete($name);
             } else {
-                $this->console->error("Module [{$name}] already exist!");
+                $this->console->error("Component [{$name}] already exist!");
 
                 return;
             }
@@ -262,7 +262,7 @@ class ModuleGenerator extends Generator
             $this->generateResources();
         }
 
-        $this->console->info("Module [{$name}] created successfully.");
+        $this->console->info("Component [{$name}] created successfully.");
     }
 
     /**
@@ -271,7 +271,7 @@ class ModuleGenerator extends Generator
     public function generateFolders()
     {
         foreach ($this->getFolders() as $folder) {
-            $path = $this->module->getModulePath($this->getName()) . '/' . $folder;
+            $path = $this->component->getComponentPath($this->getName()) . '/' . $folder;
 
             $this->filesystem->makeDirectory($path, 0755, true);
 
@@ -295,7 +295,7 @@ class ModuleGenerator extends Generator
     public function generateFiles()
     {
         foreach ($this->getFiles() as $stub => $file) {
-            $path = $this->module->getModulePath($this->getName()) . $file;
+            $path = $this->component->getComponentPath($this->getName()) . $file;
 
             if (!$this->filesystem->isDirectory($dir = dirname($path))) {
                 $this->filesystem->makeDirectory($dir, 0775, true);
@@ -312,21 +312,21 @@ class ModuleGenerator extends Generator
      */
     public function generateResources()
     {
-        $this->console->call('module:make-seed', [
+        $this->console->call('component:make-seed', [
             'name'     => $this->getName(),
-            'module'   => $this->getName(),
+            'component'   => $this->getName(),
             '--master' => true,
         ]);
 
-        $this->console->call('module:make-provider', [
+        $this->console->call('component:make-provider', [
             'name'     => $this->getName() . 'ServiceProvider',
-            'module'   => $this->getName(),
+            'component'   => $this->getName(),
             '--master' => true,
         ]);
 
-        $this->console->call('module:make-controller', [
+        $this->console->call('component:make-controller', [
             'controller' => $this->getName() . 'Controller',
-            'module'     => $this->getName(),
+            'component'     => $this->getName(),
         ]);
     }
 
@@ -350,7 +350,7 @@ class ModuleGenerator extends Generator
      */
     public function getReplacements()
     {
-        return $this->module->config('stubs.replacements');
+        return $this->component->config('stubs.replacements');
     }
 
     /**
@@ -362,7 +362,7 @@ class ModuleGenerator extends Generator
      */
     protected function getReplacement($stub)
     {
-        $replacements = $this->module->config('stubs.replacements');
+        $replacements = $this->component->config('stubs.replacements');
 
         if (!isset($replacements[$stub])) {
             return [];
@@ -384,7 +384,7 @@ class ModuleGenerator extends Generator
     }
 
     /**
-     * Get the module name in lower case.
+     * Get the component name in lower case.
      *
      * @return string
      */
@@ -394,7 +394,7 @@ class ModuleGenerator extends Generator
     }
 
     /**
-     * Get the module name in studly case.
+     * Get the component name in studly case.
      *
      * @return string
      */
@@ -410,7 +410,7 @@ class ModuleGenerator extends Generator
      */
     protected function getVendorReplacement()
     {
-        return $this->module->config('composer.vendor');
+        return $this->component->config('composer.vendor');
     }
 
     /**
@@ -418,9 +418,9 @@ class ModuleGenerator extends Generator
      *
      * @return string
      */
-    protected function getModuleNamespaceReplacement()
+    protected function getComponentNamespaceReplacement()
     {
-        return str_replace('\\', '\\\\', $this->module->config('namespace'));
+        return str_replace('\\', '\\\\', $this->component->config('namespace'));
     }
 
     /**
@@ -430,7 +430,7 @@ class ModuleGenerator extends Generator
      */
     protected function getAuthorNameReplacement()
     {
-        return $this->module->config('composer.author.name');
+        return $this->component->config('composer.author.name');
     }
 
     /**
@@ -440,6 +440,6 @@ class ModuleGenerator extends Generator
      */
     protected function getAuthorEmailReplacement()
     {
-        return $this->module->config('composer.author.email');
+        return $this->component->config('composer.author.email');
     }
 }

@@ -1,29 +1,29 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class MigrateRefreshCommand extends ModuleCommand
+class MigrateRefreshCommand extends ComponentCommand
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:migrate-refresh';
+    protected $name = 'component:migrate-refresh';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Rollback & re-migrate the modules migrations.';
+    protected $description = 'Rollback & re-migrate the components migrations.';
 
     /**
      * Execute the console command.
@@ -32,21 +32,21 @@ class MigrateRefreshCommand extends ModuleCommand
      */
     public function fire()
     {
-        $this->call('module:migrate-reset', [
-            'module'     => $this->getModuleName(),
+        $this->call('component:migrate-reset', [
+            'component'     => $this->getComponentName(),
             '--database' => $this->option('database'),
             '--force'    => $this->option('force'),
         ]);
 
-        $this->call('module:migrate', [
-            'module'     => $this->getModuleName(),
+        $this->call('component:migrate', [
+            'component'     => $this->getComponentName(),
             '--database' => $this->option('database'),
             '--force'    => $this->option('force'),
         ]);
 
         if ($this->option('seed')) {
-            $this->call('module:seed', [
-                'module' => $this->getModuleName(),
+            $this->call('component:seed', [
+                'component' => $this->getComponentName(),
             ]);
         }
     }
@@ -59,7 +59,7 @@ class MigrateRefreshCommand extends ModuleCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class GenerateEventCommand extends Command
 {
-    use ModuleCommandTrait;
+    use ComponentCommandTrait;
 
     protected $argumentName = 'name';
 
@@ -18,14 +18,14 @@ class GenerateEventCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-event';
+    protected $name = 'component:make-event';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate a new Event Class for the specified module';
+    protected $description = 'Generate a new Event Class for the specified component';
 
     /**
      * Get the console command arguments.
@@ -36,7 +36,7 @@ class GenerateEventCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the event.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -54,10 +54,10 @@ class GenerateEventCommand extends Command
 
     public function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/event.stub', [
-            'NAMESPACE'      => $this->getClassNamespace($module) . "\\" . config('modules.paths.generator.event'),
+            'NAMESPACE'      => $this->getClassNamespace($component) . "\\" . config('components.paths.generator.event'),
             "CLASS"          => $this->getClass(),
             'DUMMYNAMESPACE' => $this->laravel->getNamespace() . 'Events',
         ]))->render();
@@ -65,8 +65,8 @@ class GenerateEventCommand extends Command
 
     public function getDestinationFilePath()
     {
-        $path       = $this->laravel['modules']->getModulePath($this->getModuleName());
-        $seederPath = $this->laravel['modules']->config('paths.generator.event');
+        $path       = $this->laravel['components']->getComponentPath($this->getComponentName());
+        $seederPath = $this->laravel['components']->config('paths.generator.event');
 
         return $path . $seederPath . '/' . $this->getFileName() . '.php';
     }

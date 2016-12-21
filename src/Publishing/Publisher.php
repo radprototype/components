@@ -1,25 +1,25 @@
 <?php
 
-namespace Rad\Modules\Publishing;
+namespace Rad\Components\Publishing;
 
-use Illuminate\Console\Command as ModuleCommand;
-use Rad\Modules\Contracts\PublisherInterface;
-use Rad\Modules\Module;
-use Rad\Modules\Repository;
+use Illuminate\Console\Command as ComponentCommand;
+use Rad\Components\Contracts\PublisherInterface;
+use Rad\Components\Component;
+use Rad\Components\Repository;
 
 abstract class Publisher implements PublisherInterface
 {
     /**
-     * The name of module will used.
+     * The name of component will used.
      *
      * @var string
      */
-    protected $module;
+    protected $component;
 
     /**
-     * The modules repository instance.
+     * The components repository instance.
      *
-     * @var \Rad\Modules\Repository
+     * @var \Rad\Components\Repository
      */
     protected $repository;
 
@@ -54,11 +54,11 @@ abstract class Publisher implements PublisherInterface
     /**
      * The constructor.
      *
-     * @param Module $module
+     * @param Component $component
      */
-    public function __construct(Module $module)
+    public function __construct(Component $component)
     {
-        $this->module = $module;
+        $this->component = $component;
     }
 
     /**
@@ -86,19 +86,19 @@ abstract class Publisher implements PublisherInterface
     }
 
     /**
-     * Get module instance.
+     * Get component instance.
      *
-     * @return \Rad\Modules\Module
+     * @return \Rad\Components\Component
      */
-    public function getModule()
+    public function getComponent()
     {
-        return $this->module;
+        return $this->component;
     }
 
     /**
-     * Set modules repository instance.
+     * Set components repository instance.
      *
-     * @param \Rad\Modules\Repository $repository
+     * @param \Rad\Components\Repository $repository
      *
      * @return $this
      */
@@ -110,9 +110,9 @@ abstract class Publisher implements PublisherInterface
     }
 
     /**
-     * Get modules repository instance.
+     * Get components repository instance.
      *
-     * @return \Rad\Modules\Repository
+     * @return \Rad\Components\Repository
      */
     public function getRepository()
     {
@@ -188,7 +188,7 @@ abstract class Publisher implements PublisherInterface
 
         if ($this->getFilesystem()->copyDirectory($sourcePath, $destinationPath)) {
             if ($this->showMessage === true) {
-                $this->console->line("<info>Published</info>: {$this->module->getStudlyName()}");
+                $this->console->line("<info>Published</info>: {$this->component->getStudlyName()}");
             }
         } else {
             $this->console->error($this->error);

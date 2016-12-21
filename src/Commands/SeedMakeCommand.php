@@ -1,17 +1,17 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
 use Illuminate\Support\Str;
-use Rad\Modules\Support\Stub;
-use Rad\Modules\Traits\CanClearModulesCache;
-use Rad\Modules\Traits\ModuleCommandTrait;
+use Rad\Components\Support\Stub;
+use Rad\Components\Traits\CanClearComponentsCache;
+use Rad\Components\Traits\ComponentCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class SeedMakeCommand extends Command
 {
-    use ModuleCommandTrait, CanClearModulesCache;
+    use ComponentCommandTrait, CanClearComponentsCache;
 
     protected $argumentName = 'name';
 
@@ -20,14 +20,14 @@ class SeedMakeCommand extends Command
      *
      * @var string
      */
-    protected $name = 'module:make-seed';
+    protected $name = 'component:make-seed';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate new seeder for the specified module.';
+    protected $description = 'Generate new seeder for the specified component.';
 
     /**
      * Get the console command arguments.
@@ -38,7 +38,7 @@ class SeedMakeCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of seeder will be created.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+            ['component', InputArgument::OPTIONAL, 'The name of component will be used.'],
         ];
     }
 
@@ -64,12 +64,12 @@ class SeedMakeCommand extends Command
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
+        $component = $this->laravel['components']->findOrFail($this->getComponentName());
 
         return (new Stub('/seeder.stub', [
             'NAME'      => $this->getSeederName(),
-            'MODULE'    => $this->getModuleName(),
-            'NAMESPACE' => $this->getClassNamespace($module),
+            'MODULE'    => $this->getComponentName(),
+            'NAMESPACE' => $this->getClassNamespace($component),
 
         ]))->render();
     }
@@ -81,9 +81,9 @@ class SeedMakeCommand extends Command
     {
         $this->clearCache();
 
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['components']->getComponentPath($this->getComponentName());
 
-        $seederPath = $this->laravel['modules']->config('paths.generator.seed');
+        $seederPath = $this->laravel['components']->config('paths.generator.seed');
 
         return $path . $seederPath . '/' . $this->getSeederName() . '.php';
     }

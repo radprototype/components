@@ -1,10 +1,10 @@
 <?php
 
-namespace Rad\Modules\tests\Commands;
+namespace Rad\Components\tests\Commands;
 
 use Illuminate\Support\Facades\Schema;
-use Rad\Modules\Repository;
-use Rad\Modules\Tests\BaseTestCase;
+use Rad\Components\Repository;
+use Rad\Components\Tests\BaseTestCase;
 
 abstract class MigrateCommandTest extends BaseTestCase
 {
@@ -25,11 +25,11 @@ abstract class MigrateCommandTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_migrates_a_module()
+    public function it_migrates_a_component()
     {
         $this->repository->addLocation(__DIR__ . '/../stubs/Recipe');
 
-        $this->artisan('module:migrate', ['module' => 'Recipe']);
+        $this->artisan('component:migrate', ['component' => 'Recipe']);
 
         dd(Schema::hasTable('recipe__recipes'), $this->app['db']->table('recipe__recipes')->get());
     }

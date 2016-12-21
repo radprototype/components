@@ -1,24 +1,24 @@
 <?php
 
-namespace Rad\Modules\Commands;
+namespace Rad\Components\Commands;
 
-use Illuminate\Console\Command as ModuleCommand;
+use Illuminate\Console\Command as ComponentCommand;
 
-class SetupCommand extends ModuleCommand
+class SetupCommand extends ComponentCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'module:setup';
+    protected $name = 'component:setup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Setting up modules folders for first use.';
+    protected $description = 'Setting up components folders for first use.';
 
     /**
      * Execute the console command.
@@ -27,19 +27,19 @@ class SetupCommand extends ModuleCommand
      */
     public function fire()
     {
-        $this->generateModulesFolder();
+        $this->generateComponentsFolder();
 
         $this->generateAssetsFolder();
     }
 
     /**
-     * Generate the modules folder.
+     * Generate the components folder.
      */
-    public function generateModulesFolder()
+    public function generateComponentsFolder()
     {
-        $this->generateDirectory($this->laravel['modules']->config('paths.modules'),
-            'Modules directory created successfully',
-            'Modules directory already exist'
+        $this->generateDirectory($this->laravel['components']->config('paths.components'),
+            'Components directory created successfully',
+            'Components directory already exist'
         );
     }
 
@@ -48,7 +48,7 @@ class SetupCommand extends ModuleCommand
      */
     public function generateAssetsFolder()
     {
-        $this->generateDirectory($this->laravel['modules']->config('paths.assets'),
+        $this->generateDirectory($this->laravel['components']->config('paths.assets'),
             'Assets directory created successfully',
             'Assets directory already exist'
         );
