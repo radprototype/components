@@ -36,8 +36,8 @@ return [
         ],
         'replacements' => [
             'start'           => ['LOWER_NAME'],
-            'routes'          => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
-            'json'            => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
+            'routes'          => ['LOWER_NAME', 'STUDLY_NAME', 'COMPONENT_NAMESPACE'],
+            'json'            => ['LOWER_NAME', 'STUDLY_NAME', 'COMPONENT_NAMESPACE'],
             'views/index'     => ['LOWER_NAME'],
             'views/master'    => ['STUDLY_NAME'],
             'scaffold/config' => ['STUDLY_NAME'],
@@ -47,7 +47,7 @@ return [
                 'VENDOR',
                 'AUTHOR_NAME',
                 'AUTHOR_EMAIL',
-                'MODULE_NAMESPACE'
+                'COMPONENT_NAMESPACE'
             ]
         ]
     ],
