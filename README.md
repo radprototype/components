@@ -9,7 +9,6 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/rad-laravel/modules.svg?style=flat-square)](https://packagist.org/packages/rad-laravel/modules)
 
 
-- [Upgrade Guide](#upgrade-guide)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Naming Convension](#naming-convension)
@@ -21,17 +20,13 @@
 - [Auto Scan Vendor Directory](#auto-scan-vendor-directory)
 - [Publishing Modules](#publishing-modules)
 
-Find out why you should use this package in the article: [Writing modular applications with laravel-modules](https://nicolaswidart.com/blog/writing-modular-applications-with-laravel-modules).
-
-<a name="upgrade-guide"></a>
-## Upgrade Guide
 
 <a name="installation"></a>
 ## Installation
 
 ### Quick
 
-To install through composer, simply run the following command:
+Just clone it or install using composer point to this repo.
 
 #### Add Service Provider
 
