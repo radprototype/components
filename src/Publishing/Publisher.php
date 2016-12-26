@@ -2,7 +2,7 @@
 
 namespace Rad\Components\Publishing;
 
-use Illuminate\Console\Command as ComponentCommand;
+use Illuminate\Console\Command;
 use Rad\Components\Contracts\PublisherInterface;
 use Rad\Components\Component;
 use Rad\Components\Repository;
